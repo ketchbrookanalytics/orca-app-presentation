@@ -123,6 +123,8 @@ WHY ORCA EXISTS
 
 ::: notes
 Keaton: open-end survey coding is slow, manual, and inconsistent at scale. AI can accelerate it — but internal stakeholders and clients won't accept a black box.
+
+Michael: and when we say *coding*, we don't mean R or Python code -- we're talking about taking free-text data from user surveys and tagging them as belonging to one of many possible fixed categories.
 :::
 
 ## ORCA is now how KS&R's researchers code **thousands** of open-end responses {.paper .headline-right}
@@ -156,6 +158,8 @@ What is ORCA?
 
 ::: notes
 Keaton: the proof is in the pudding. ORCA is now how KS&R's researchers code thousands of open-ended survey responses with AI — in production, in daily use.
+
+Feedback: Let's blow up these images so that its one image per slide x 4 slides.
 :::
 
 ## One system, two companies {.cream}
