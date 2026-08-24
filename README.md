@@ -27,3 +27,9 @@ If you don't see the popup, you can also reopen in container via the VSCode Comm
 ## Developing the Slides
 
 In order to view the slides, run `quarto preview presentation/orca.qmd` from a terminal. This will launch a *live* preview of the slides in your browser at `http://localhost:<port>/presentation/orca.html` -- when you edit and save [presentation/orca.qmd](presentation/orca.qmd), the slides will re-render.
+
+## Publishing the Slides
+
+Every push to `main` renders the deck and deploys it to GitHub Pages via [.github/workflows/publish.yml](.github/workflows/publish.yml). You can also trigger a re-deploy by hand from the repository's **Actions** tab ("Publish slides" -> "Run workflow").
+
+This requires GitHub Pages to be enabled once, in **Settings -> Pages**, with **Source** set to **GitHub Actions**.

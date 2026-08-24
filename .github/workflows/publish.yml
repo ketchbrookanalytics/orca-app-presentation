@@ -1,0 +1,70 @@
+name: Publish slides
+
+on:
+  push:
+    branches: [main]
+  # Lets you re-deploy the current main without pushing an empty commit.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deployments race; queue instead of cancelling so a run that is
+# already uploading finishes rather than leaving Pages half-updated.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    # A render of this deck takes well under a minute; this is a stuck-job
+    # backstop, not a performance budget. Without it the job would inherit
+    # GitHub's 6-hour default before it gave up.
+    timeout-minutes: 20
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          # Pinned to the same version as .devcontainer/Dockerfile so CI and the
+          # devcontainer render identically. Bump both together.
+          version: 1.9.38
+
+      # `_quarto.yml` restricts project.render to presentation/orca.qmd, so this
+      # renders the deck and nothing else. --output-dir keeps the site build out
+      # of the working tree paths that .gitignore covers for local renders.
+      #
+      # No headless Chrome needed here: this is the HTML deck, not PDF/PNG.
+      - name: Render deck
+        run: quarto render --output-dir _site
+
+      # Quarto mirrors the input's directory structure, so the render lands in
+      # _site/presentation/ (orca.html + orca_files/ + images/). Everything in
+      # there is referenced relatively, so lifting the directory's contents to
+      # the site root keeps all the links intact and puts the deck at `/`.
+      - name: Move deck to site root
+        run: |
+          shopt -s dotglob
+          mv _site/presentation/* _site/
+          rmdir _site/presentation
+          # Copy rather than rename, so both `/` and `/orca.html` resolve.
+          cp _site/orca.html _site/index.html
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+      - id: deploy
+        uses: actions/deploy-pages@v5

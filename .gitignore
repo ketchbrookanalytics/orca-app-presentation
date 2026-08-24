@@ -5,4 +5,7 @@
 /presentation/orca_files/
 /.quarto/
 
+# Pages site build (`quarto render --output-dir _site`, as CI does it)
+/_site/
+
 **/*.quarto_ipynb
