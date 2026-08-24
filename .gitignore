@@ -1,0 +1,8 @@
+.DS_Store
+
+# Quarto render output
+/presentation/orca.html
+/presentation/orca_files/
+/.quarto/
+
+**/*.quarto_ipynb

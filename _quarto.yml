@@ -1,0 +1,70 @@
+project:
+  type: default
+
+  # Without this, `quarto render` would also try to render the loose notes at
+  # the repo root (outline.md, notes.md, pitch-script.md, and the two READMEs),
+  # which are working documents, not outputs.
+  render:
+    - presentation/orca.qmd
+
+  preview:
+    port: 4200
+    # The devcontainer has no browser to open; VS Code forwards the port and
+    # the Quarto extension opens its own preview pane. Flip to true if you run
+    # `quarto preview` on the host instead.
+    browser: false
+
+# Deck-wide RevealJS config. Content and per-slide metadata stay in
+# presentation/orca.qmd; this is everything about how the deck behaves.
+# Paths here resolve against the project root, not the .qmd.
+format:
+  revealjs:
+    theme:
+      - default
+      - presentation/ksr-orca.scss
+
+    # The pptx canvas is 20in x 11.25in at 96dpi, so working at 1920x1080 makes
+    # one CSS pixel here equal one pixel there. Every size in the theme is
+    # therefore the deck's own measurement. See presentation/README.md.
+    width: 1920
+    height: 1080
+    margin: 0
+    min-scale: 0.2
+    max-scale: 2.0
+
+    # The slides are laid out top-down by the theme, not vertically centred by
+    # reveal. Changing this will break every slide's composition.
+    center: false
+
+    transition: fade
+    transition-speed: fast
+    background-transition: fade
+
+    slide-number: c/t
+    show-slide-number: speaker
+    progress: true
+    controls: false
+    hash: true
+    history: true
+
+    menu:
+      side: right
+      numbers: true
+
+    # Every figure is placed by the layout, so reveal must not wrap lone images
+    # in .r-stretch and resize them itself.
+    auto-stretch: false
+
+    # Google Fonts is fetched over the network. To present offline, download
+    # Archivo and Source Serif 4, serve them locally, and swap this for an
+    # @font-face block in the theme.
+    embed-resources: false
+    include-in-header:
+      - text: |
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300..700;1,300..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,300..600&display=swap">
+
+# The deck's layout is hand-built from nested fenced divs with deliberate
+# colon counts. The visual editor reflows them and mismatches the fences.
+editor: source
