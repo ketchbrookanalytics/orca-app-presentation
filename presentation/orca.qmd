@@ -180,7 +180,7 @@ A CROSS-COMPANY BUILD
 :::: {.card .centered}
 ![](images/ketchbrook-mark.png){.logo-lg}
 
-![](images/ketchbrook-wordmark.png){.logo-sm}
+![](images/ketchbrook-wordmark.png){.logo-md}
 
 ::: foot
 [Consultancy — front-end & UX owner]{.cap}
