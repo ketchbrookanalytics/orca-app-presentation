@@ -24,6 +24,12 @@ If you don't see the popup, you can also reopen in container via the VSCode Comm
 - Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac) to open the Command Palette.
 - Search for "Dev Containers: Reopen in Container" and select it.
 
-## Rendering the Slides
+## Developing the Slides
 
-In order to view the slides, run `quarto preview` from a terminal. This will launch a *live* preview of the slides -- when you edit and save [presentation/orca.qmd](presentation/orca.qmd), the preview will re-render.
+In order to view the slides, run `quarto preview presentation/orca.qmd` from a terminal. This will launch a *live* preview of the slides in your browser at `http://localhost:<port>/presentation/orca.html` -- when you edit and save [presentation/orca.qmd](presentation/orca.qmd), the slides will re-render.
+
+## Publishing the Slides
+
+Every push to `main` renders the deck and deploys it to GitHub Pages via [.github/workflows/publish.yml](.github/workflows/publish.yml). You can also trigger a re-deploy by hand from the repository's **Actions** tab ("Publish slides" -> "Run workflow").
+
+This requires GitHub Pages to be enabled once, in **Settings -> Pages**, with **Source** set to **GitHub Actions**.

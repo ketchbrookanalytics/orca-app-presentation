@@ -700,6 +700,13 @@ $code-color: $navy !default;
 // Pins a card's caption to its bottom edge (slide 21).
 .reveal .card .foot { margin-top: auto; }
 
+// A centred card that also pins a `.foot` isn't actually centred: the foot's
+// `margin-top: auto` swallows every pixel of free space, so `justify-content`
+// has none left to distribute and the body sits flush against the top padding.
+// A matching auto margin above the first child splits the free space in two, so
+// the body settles in the middle of what's left above the caption (slide 7).
+.reveal .card.centered:has(> .foot) > :first-child { margin-top: auto; }
+
 // --- figures ---------------------------------------------------------------
 // The deck frames screenshots in a 1px tan/cream border. Images always scale
 // to fit their box rather than overflowing the slide.

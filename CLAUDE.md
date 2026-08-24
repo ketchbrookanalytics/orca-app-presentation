@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A conference talk, not an application. It holds the slides for "ORCA: a collaboratively-built AI-powered Shiny app built on Posit Team" (posit::conf(2026)), presented by Michael Thomas (Ketchbrook Analytics, front-end/UX) and Keaton Wilson (KS&R, back-end/infrastructure).
 
-There is no build system, test suite, or linter. The only artifact is a Quarto RevealJS deck.
+There is no test suite or linter. The only artifact is a Quarto RevealJS deck, which CI publishes to GitHub Pages on every push to `main`.
 
 ## Commands
 
@@ -19,11 +19,14 @@ quarto render    # writes presentation/orca.html + presentation/orca_files/ (bot
 
 `_quarto.yml` restricts `project.render` to `presentation/orca.qmd`, so the loose working notes at the repo root are never rendered.
 
+`.github/workflows/publish.yml` renders the deck and deploys it to GitHub Pages on every push to `main` (or on manual dispatch). It renders with `--output-dir _site`, then lifts `_site/presentation/` to the site root and copies `orca.html` to `index.html`, so the deck serves from `/`. Its Quarto version is pinned to the same one as `.devcontainer/Dockerfile` — bump both together.
+
 Rendering to PDF/PNG needs Quarto's headless Chrome plus the shared libraries it links against on this Debian base — `.devcontainer/post-create.sh` installs both. In the devcontainer this is already done.
 
 ## Structure
 
 ```
+.github/workflows/publish.yml          renders + deploys the deck to GitHub Pages
 _quarto.yml                            project config + ALL RevealJS behaviour
 presentation/orca.qmd                  the 26 slides (content + speaker notes)
 presentation/ksr-orca.scss             the KS&R/ORCA theme
