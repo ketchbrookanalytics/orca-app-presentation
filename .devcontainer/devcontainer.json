@@ -1,20 +1,14 @@
 // https://github.com/rocker-org/devcontainer-features
 {
 	"name": "ORCA App Presentation",
-	// Minimal Debian base; everything this project needs comes from the
-	// features below.
-	"image": "mcr.microsoft.com/devcontainers/base:bookworm",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
 
 	"features": {
 		// Install GitHub CLI
-		"ghcr.io/devcontainers/features/github-cli:1": {},
-		// Install Quarto CLI
-		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {}
+		"ghcr.io/devcontainers/features/github-cli:1": {}
 	},
-
-	// Install the shared libraries Quarto's headless Chrome needs, plus Chrome
-	// itself. Required for rendering slides/figures to PDF or PNG.
-	"postCreateCommand": "bash .devcontainer/post-create.sh",
 
 	// Pass local git, GitHub CLI, and Claude Code credentials to the container
 	"mounts": [
