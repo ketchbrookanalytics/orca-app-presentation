@@ -5,3 +5,25 @@ Presentation for Posit Conf 2026, titled "ORCA: a collaboratively-built AI-power
 ## Abstract
 
 ORCA is KS&R's internal Shiny application for AI-assisted coding of open-ended survey responses. Designed in concert with Ketchbrook Analytics, ORCA combines an intuitive front-end for job submission, response review, and code editing with a modular backend built on the Posit ecosystem. The system integrates a {golem}-based Shiny app, a plumber API for asynchronous processing, pins for versioned metadata, and scheduled batch workflows for logging and delivery. This talk presents how thoughtful UI/UX design and Posit-based infrastructure work together to operationalize AI in a transparent, reproducible research environment.
+
+## Installation
+
+### Option 1: Local Quarto
+
+In order to render the slides, you will need to have [Quarto](https://quarto.org) installed.
+
+### Option 2: VSCode Devcontainer
+
+If you prefer to use [VSCode Devcontainers](https://code.visualstudio.com/docs/devcontainers/containers) (as opposed to installing Quarto on your machine), you will need to have [Docker](https://www.docker.com/products/docker-desktop/) and [VSCode](https://code.visualstudio.com/) installed.
+
+1. Ensure that Docker is running.
+2. Open the newly cloned folder containing this repository in VSCode.
+3. You should see a popup message in VSCode letting you know that this folder contains a Dev Container configuration file. Click "Reopen in Container".
+
+If you don't see the popup, you can also reopen in container via the VSCode Command Palette:
+- Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac) to open the Command Palette.
+- Search for "Dev Containers: Reopen in Container" and select it.
+
+## Rendering the Slides
+
+In order to view the slides, run `quarto preview` from a terminal. This will launch a *live* preview of the slides -- when you edit and save [presentation/orca.qmd](presentation/orca.qmd), the preview will re-render.
