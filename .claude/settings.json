@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Edit(./*.qmd)",
+      "Edit(./qmd/**)",
+      "Edit(./*.scss)",
+      "Edit(./CLAUDE.md)",
+      "Edit(./_quarto.yml)",
+      "Bash(quarto render:*)",
+      "Bash(quarto preview:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)"
+    ]
+  }
+}
