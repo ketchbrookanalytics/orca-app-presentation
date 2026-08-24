@@ -128,7 +128,9 @@ $code-color: $navy !default;
     .num, .glyph, .accent { color: $blue-light; }
     .sub       { color: $blue-light; }
     .lede      { color: $blue-pale; }
-    .cap, .kicker, .next, .note { color: $blue-muted; }
+    .bullets li { color: $blue-pale; }
+    .cap, .kicker, .note { color: $blue-muted; }
+    .next      { color: $blue-light; }
     strong     { color: $blue-light; }
     hr         { border-top-color: $navy-mid; }
   }
@@ -263,6 +265,39 @@ $code-color: $navy !default;
 }
 
 // Standing text roles, used as `[text]{.class}` spans.
+// Bulleted copy. The deck otherwise has no lists, so reveal's defaults would
+// apply at browser scale on a 1920px canvas. Body size by default; `.lg` for
+// full-width lede bullets.
+.reveal .bullets ul {
+  margin: 0;
+  padding-left: 36px;
+  list-style: none;
+  max-width: 1350px;
+}
+
+.reveal .bullets li {
+  position: relative;
+  font-size: $fs-body;
+  line-height: 1.45;
+  color: $slate;
+  margin-bottom: 20px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -36px;
+    top: 0.6em;
+    width: 14px;
+    height: 2px;
+    background-color: $blue-light;
+  }
+}
+
+.reveal .bullets.lg li {
+  font-size: $fs-lede;
+  margin-bottom: 32px;
+}
+
 .reveal .lede {
   @include bare-block;
   font-size: $fs-lede;
@@ -323,9 +358,10 @@ $code-color: $navy !default;
   display: block;
   align-self: flex-end;
   margin: 0;
-  font-size: $fs-small;
+  font-size: $fs-micro;
   line-height: 1.3;
-  color: $blue-muted;
+  font-style: italic;
+  color: $navy-mid;
 }
 
 .reveal .accent { color: $blue-light; }
@@ -372,17 +408,26 @@ $code-color: $navy !default;
   max-width: none;
 }
 
-// R package names — {golem}, {plumber}, {pins}
+// R package names — golem, plumber, pins
 .reveal .pkg {
   font-style: italic;
   font-weight: 600;
   color: $blue-light;
 }
 
+// Inside a chip or caption the package name is the whole point, so it takes
+// the container's colour; the italic alone marks it as a package.
+.reveal .chip .pkg,
+.reveal .cap .pkg { color: inherit; }
+
 // On light grounds the accent blue is too pale for small text, so package
 // names take the navy there instead.
 .reveal .paper .pkg,
 .reveal .cream .pkg { color: $navy; }
+
+// ...except inside a navy card on one of those grounds, where that navy would
+// be invisible. Back to the caption's own colour.
+.reveal .card.navy .pkg { color: inherit; }
 
 // A numbered step marker sitting inline before its label (slide 6).
 .reveal .step {
@@ -506,6 +551,75 @@ $code-color: $navy !default;
   font-size: $fs-headline-lg;
 }
 
+// The architecture diagram. Same three-box seam as `.chain` on the top row,
+// plus a second row for the pieces chapter 3 comes back to. Children place
+// themselves with an inline `grid-area: <row>/<col>`, so this stays one rule
+// instead of a class per box.
+.reveal .arch {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: 1fr 104px 1fr;
+  gap: 14px;
+  width: 100%;
+  align-items: stretch;
+}
+
+.reveal .arch .card { padding: 20px 24px; }
+
+.reveal .arch > .glyph {
+  align-self: center;
+  justify-self: center;
+  font-size: $fs-headline;
+}
+
+// ORCAstra is a hub, not a link in a chain: ORCAdb and ORCAwatch each talk to
+// it directly. A glyph arrow can't span the diagonal between two cards several
+// columns apart, so these connectors are a corner-to-corner gradient on a box
+// spanning the gap — it scales with the grid instead of needing a fixed angle.
+.reveal .wire {
+  align-self: stretch;
+  justify-self: stretch;
+  position: relative;
+}
+
+// An arrowhead sitting at the midpoint of each diagonal, tilted to match it.
+// ponytail: the 18deg is read off the wire box's ratio (~320x104); it only
+// needs recomputing if `.arch`'s tracks or the wires' spans change.
+.reveal .wire::after {
+  content: "↔";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-family: $presentation-heading-font, "Segoe UI Symbol", "Apple Symbols",
+    "Noto Sans Symbols 2", "DejaVu Sans", "Liberation Sans", sans-serif;
+  font-size: $fs-headline;
+  font-weight: 300;
+  line-height: 1;
+  color: $blue-light;
+  background-color: $cream;
+  padding: 0 14px;
+}
+
+.reveal .wire.up-right::after { transform: translate(-50%, -50%) rotate(-18deg); }
+.reveal .wire.up-left::after  { transform: translate(-50%, -50%) rotate(18deg); }
+
+// The drawn line runs perpendicular to the gradient axis, so `to top left`
+// is what produces a line rising to the right, and vice versa.
+.reveal .wire.up-right {
+  background: linear-gradient(to top left,
+    transparent calc(50% - 2px), $blue-light 50%, transparent calc(50% + 2px));
+}
+
+.reveal .wire.up-left {
+  background: linear-gradient(to top right,
+    transparent calc(50% - 2px), $blue-light 50%, transparent calc(50% + 2px));
+}
+
+// Everything on this slide except the ORCA <-> ORCAstra seam is context, not
+// the point. Greyed rather than removed so the audience sees the whole shape
+// once before chapter 3 fills it in.
+.reveal .muted { opacity: 0.4; }
+
 // Pandoc wraps consecutive lines of inline content in a single `<p>`, which
 // would become the flex/grid item and collapse everything inside it into one
 // stacked block. `display: contents` removes those wrappers from layout so the
@@ -516,7 +630,8 @@ $code-color: $navy !default;
 .reveal .chips > p,
 .reveal .middle-stack > p,
 .reveal .footer-logos > p,
-.reveal .byline .col > p { display: contents; }
+.reveal .byline .col > p,
+.reveal .byline .meta > p { display: contents; }
 
 // A row of items sharing a baseline.
 .reveal .row {
@@ -530,9 +645,9 @@ $code-color: $navy !default;
 
 // A hex logo next to its caption (slide 21).
 .reveal .row.hexrow {
-  gap: 28px;
+  gap: 22px;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .reveal .row.hexrow .cap { flex: 1 1 auto; }
@@ -776,7 +891,7 @@ $code-color: $navy !default;
 .reveal .logo-md, .reveal .logo-md img { height: 90px;  width: auto; }
 .reveal .logo-lg, .reveal .logo-lg img { height: 200px; width: auto; }
 .reveal .logo-xl, .reveal .logo-xl img { height: 155px; width: auto; }
-.reveal .hex,     .reveal .hex img     { height: 108px; width: auto; flex: 0 0 auto; }
+.reveal .hex,     .reveal .hex img     { height: 88px;  width: auto; flex: 0 0 auto; }
 
 // ===========================================================================
 // 6. Slide variants
@@ -842,7 +957,32 @@ $code-color: $navy !default;
   width: 100%;
 }
 
-.reveal .byline .rule { background-color: $navy-mid; height: 60px; }
+.reveal .byline .rule { background-color: $navy-mid; height: 96px; }
+
+// Headshot + name/role sit on one row; the right-hand column mirrors so both
+// photos hug the centre rule.
+.reveal .byline .col {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.reveal .byline > .col:last-child { flex-direction: row-reverse; }
+
+.reveal .byline .meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reveal .byline .headshot {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid $navy-mid;
+  flex: 0 0 auto;
+  margin: 0;
+}
 .reveal .byline > *:first-child { padding-left: 120px; }
 .reveal .byline > *:last-child  { padding-right: 0; text-align: right; }
 
@@ -867,6 +1007,58 @@ $code-color: $navy !default;
 }
 
 .reveal .closing h2 { font-size: $fs-chapter; color: $white; }
+
+// Closing slide's two presenters, side by side under the thank-you.
+.reveal .closing .people {
+  display: flex;
+  justify-content: center;
+  gap: 200px;
+}
+
+.reveal .closing .person {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-top: 0;
+}
+
+.reveal .closing .person > p { display: contents; }
+
+.reveal .headshot-lg,
+.reveal .headshot-lg img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid $navy-mid;
+  margin: 0 0 12px;
+}
+
+.reveal .closing .name { font-size: $fs-body-lg; font-weight: 600; color: $white; }
+.reveal .closing .role { font-size: $fs-small; color: $blue-muted; line-height: 1.45; }
+
+// `margin-top: auto` inside equal-height flex columns keeps both codes on the
+// same baseline even when one presenter carries an extra title line.
+.reveal .qr {
+  width: 190px;
+  height: 190px;
+  margin-top: auto;
+  padding-top: 0;
+  background-color: $white;
+}
+
+// Stands in until the real LinkedIn URLs are encoded; deliberately not
+// scannable, so a wrong code never goes up on stage.
+.reveal .qr.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 2px dashed $navy-mid;
+  font-size: $fs-small;
+  color: $blue-muted;
+}
 
 .reveal .closing .footer-logos {
   position: absolute;
