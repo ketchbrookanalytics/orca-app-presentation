@@ -1,0 +1,893 @@
+/*-- scss:defaults --*/
+
+// ============================================================================
+// KS&R / ORCA reveal.js theme
+//
+// Ported from ORCA__AI-powered_survey_coding.pptx. Every colour and size below
+// was read out of the deck's slide XML, so the numbers are the deck's numbers:
+// PowerPoint points are converted at 96 dpi (pt x 4/3 = px) and the canvas is
+// the pptx canvas, 1920 x 1080 with a 100px margin.
+//
+// Type: KS&R's brand book specifies Tobias Light (serif headlines) and
+// Sohne Buch (sans). Both are licensed, so the deck itself already declares
+// Source Serif 4 and Archivo as the fallback pair — those are what we use here,
+// and both are on Google Fonts. The brand book's -10 headline tracking is
+// applied as letter-spacing: -0.01em.
+// ============================================================================
+
+// --- palette ----------------------------------------------------------------
+$navy:       #142645 !default; // primary dark ground / dark text
+$navy-mid:   #2C4A6B !default; // hairlines and chips on navy
+$slate:      #3A4A63 !default; // lede body on light grounds
+$slate-muted:#5A6B85 !default; // eyebrows, captions, small text on light
+$blue-muted: #7D93B8 !default; // eyebrows, captions, small text on navy
+$blue-light: #97C6F2 !default; // accent — numerals, emphasis, headlines on navy
+$blue-pale:  #C3D5EA !default; // body text on navy
+$cream:      #F0EBE5 !default; // warm ground
+$cream-dark: #D8D0C6 !default; // hairlines and image frames on cream
+$white:      #FFFFFF !default;
+
+// --- type scale (px on the 1920x1080 canvas) --------------------------------
+$fs-eyebrow:    24px !default; // 18pt
+$fs-micro:      20px !default; // 15pt
+$fs-small:      22px !default; // 16.5pt
+$fs-body:       24px !default; // 18pt
+$fs-body-lg:    26px !default; // 19.5pt
+$fs-lede:       30px !default; // 22.5pt
+$fs-sub:        37px !default; // 28pt
+$fs-headline:   52px !default; // 39pt
+$fs-headline-lg:56px !default; // 42pt
+$fs-statement:  60px !default; // 45pt
+$fs-chapter:    72px !default; // 54pt
+$fs-display:   120px !default; // 90pt
+
+// --- geometry ---------------------------------------------------------------
+$slide-w:  1920px !default;
+$slide-h:  1080px !default;
+$margin-x:  100px !default;
+$margin-y:  100px !default;
+$gutter:     48px !default;
+
+// --- quarto / reveal hooks --------------------------------------------------
+$font-family-sans-serif: Archivo, "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$presentation-heading-font: "Source Serif 4", Georgia, "Times New Roman", serif !default;
+$presentation-font-size-root: 24px !default;
+$presentation-line-height: 1.4 !default;
+
+$body-bg: $navy !default;             // letterbox around the scaled slide
+$body-color: $navy !default;
+$presentation-heading-color: $navy !default;
+$link-color: $blue-light !default;
+$link-color-hover: $blue-pale !default;
+$code-color: $navy !default;
+
+/*-- scss:mixins --*/
+
+// Reset the paragraph margins Quarto puts on lone-span blocks such as
+// `[01]{.num}`, which pandoc wraps in a <p>.
+@mixin bare-block {
+  display: block;
+  margin: 0;
+}
+
+/*-- scss:rules --*/
+
+// ===========================================================================
+// 1. The slide canvas
+// ===========================================================================
+//
+// Every slide is a flex column filling the full 1920x1080 with a 100px margin,
+// which is how the pptx is laid out. `center: false` in the YAML keeps reveal
+// from vertically centring; slides that ARE centred opt in via `.statement`.
+
+.reveal .slides > section,
+.reveal .slides > section > section {
+  height: $slide-h;
+  padding: $margin-y $margin-x;
+  box-sizing: border-box;
+  align-items: flex-start;
+  text-align: left;
+  font-size: $fs-body;
+  line-height: 1.4;
+  color: $navy;
+  background-color: $white; // default ground; overridden by .cream / .navy
+}
+
+// reveal.js writes `style="display: block"` *inline* onto whichever slide is
+// showing, so no stylesheet rule can make the slide a flex container without
+// `!important` — this is the one place it is unavoidable. Without it every
+// layout that depends on flex collapses to plain source order: the eyebrow
+// stops being hoisted above the headline, `.fill` stops filling, and
+// `align-self` / `margin-top: auto` stop pushing content to the slide edges.
+//
+// Scoping to `.present` leaves reveal's inline `display: none` on the other
+// slides untouched, so only the visible slide is affected.
+.reveal .slides > section.present,
+.reveal .slides > section > section.present,
+.reveal.overview .slides > section {
+  display: flex !important;
+  flex-direction: column;
+}
+
+// --- grounds ---------------------------------------------------------------
+// Setting the background on the section itself (rather than reveal's
+// data-background-color) keeps the ground and its text palette in one class.
+
+.reveal .slides > section {
+  &.paper { background-color: $white; }
+  &.cream { background-color: $cream; }
+
+  &.navy {
+    background-color: $navy;
+    color: $blue-pale;
+
+    // Every role that names an explicit colour for a light ground has to be
+    // restated here, or it keeps the dark value and disappears into the navy.
+    h1, h2, h3, .headline { color: $white; }
+    .eyebrow   { color: $blue-muted; }
+    .num, .glyph, .accent { color: $blue-light; }
+    .sub       { color: $blue-light; }
+    .lede      { color: $blue-pale; }
+    .cap, .kicker, .next, .note { color: $blue-muted; }
+    strong     { color: $blue-light; }
+    hr         { border-top-color: $navy-mid; }
+  }
+}
+
+// ===========================================================================
+// 2. Type
+// ===========================================================================
+
+.reveal h1, .reveal h2, .reveal h3 {
+  font-family: $presentation-heading-font;
+  font-weight: 300;          // Tobias Light / Source Serif 4 Light
+  letter-spacing: -0.01em;   // brand book: -10 tracking on headlines
+  text-transform: none;
+  margin: 0;
+  color: $navy;
+}
+
+// h2 is the slide headline (39-42pt serif in the deck). `.headline` is the same
+// treatment for the slides where the headline is not the first thing in the
+// slide's flow and so cannot be the h2 — pandoc always emits the heading first.
+.reveal h2,
+.reveal .headline {
+  font-size: $fs-headline;
+  line-height: 1.05;
+  max-width: 1650px;
+}
+
+.reveal .headline {
+  display: block;
+  font-family: $presentation-heading-font;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: $navy;
+  margin: 0;
+}
+
+// An empty `##` opens a slide with no visible title — used where the deck's
+// header is a hand-built layout rather than a single headline.
+.reveal h2:empty { display: none; }
+
+// Slide 6 sets its headline flush right. The class lands on the section, not
+// the h2 — Quarto puts a slide heading's attributes on the enclosing section.
+.reveal .slides > section.headline-right > h2 {
+  align-self: flex-end;
+  text-align: right;
+  max-width: 1180px;
+}
+
+.reveal h1 {
+  font-size: $fs-display;
+  line-height: 0.95;
+  color: $blue-light;
+}
+
+.reveal h3 {
+  font-size: 44px;
+  line-height: 1.15;
+}
+
+// The wordmark on the title slide. This is a span rather than an `#` heading
+// because in Quarto revealjs any heading at or above the slide level starts a
+// new slide, which would split the title slide in two.
+.reveal .display {
+  @include bare-block;
+  font-family: $presentation-heading-font;
+  font-weight: 300;
+  font-size: $fs-display;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  color: $blue-light;
+}
+
+// A named lens on the build — "Michael" / "Keaton" on slide 9. Also a span
+// rather than an `###`, since pandoc's --section-divs turns sub-headings into
+// nested <section>s and swallows the surrounding column div.
+.reveal .who {
+  @include bare-block;
+  font-family: $presentation-heading-font;
+  font-weight: 300;
+  font-size: 44px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: $white;
+  margin-bottom: 18px;
+}
+
+.reveal p {
+  margin: 0 0 0.7em;
+  font-size: $fs-body;
+  line-height: 1.4;
+  max-width: 1100px;
+}
+
+.reveal strong { font-weight: 600; color: $navy; }
+.reveal em     { font-style: italic; }
+
+// --- block roles authored as fenced divs -----------------------------------
+//
+// `.eyebrow`, `.next`, `.kicker` and `.speaker` are written as `::: eyebrow`
+// rather than as spans, because each depends on being a direct flex child of
+// the slide: the eyebrow is hoisted above the headline with `order`, the
+// hand-off line is pushed right with `align-self`, and the others need the
+// full measure. Pandoc wraps a span in a `<p>`, which would become the flex
+// child instead and break all three. The rule below strips the type and
+// spacing off the `<p>` pandoc puts *inside* the div.
+
+.reveal .eyebrow > p,
+.reveal .next    > p,
+.reveal .kicker  > p,
+.reveal .speaker > p {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  margin: 0;
+  max-width: none;
+}
+
+// The eyebrow sits above the headline. It is authored AFTER the `##` in the
+// source (pandoc always emits the heading first), so it is hoisted with
+// flex order rather than by moving it in the markup.
+.reveal .eyebrow {
+  order: -1;
+  display: block;
+  margin: 0 0 20px;
+  font-family: $font-family-sans-serif;
+  font-size: $fs-eyebrow;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  color: $slate-muted;
+}
+
+// Standing text roles, used as `[text]{.class}` spans.
+.reveal .lede {
+  @include bare-block;
+  font-size: $fs-lede;
+  line-height: 1.45;
+  color: $slate;
+  max-width: 1350px;
+}
+
+.reveal .sub {
+  @include bare-block;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: $navy;
+  margin-bottom: 12px;
+}
+
+.reveal .num {
+  @include bare-block;
+  font-family: $font-family-sans-serif;
+  font-size: $fs-headline-lg;
+  font-weight: 300;
+  line-height: 1;
+  color: $blue-light;
+  margin-bottom: 24px;
+}
+
+.reveal .cap {
+  @include bare-block;
+  font-size: $fs-micro;
+  line-height: 1.45;
+  color: $slate-muted;
+  max-width: 660px;
+}
+
+.reveal .note {
+  @include bare-block;
+  font-size: 28px;
+  line-height: 1.45;
+  color: $slate;
+}
+
+// Bottom-of-slide takeaway line. `.fill` above it eats the slack, so the
+// top margin only ever shows as breathing room against the block above.
+.reveal .kicker {
+  display: block;
+  width: 100%;
+  margin: 0 0 6px;
+  font-size: $fs-body;
+  line-height: 1.4;
+  color: $slate-muted;
+}
+
+.reveal .fill + .kicker { margin-top: 26px; }
+
+// "Next — Keaton, on ... →" hand-off, bottom right.
+.reveal .next {
+  display: block;
+  align-self: flex-end;
+  margin: 0;
+  font-size: $fs-small;
+  line-height: 1.3;
+  color: $blue-muted;
+}
+
+.reveal .accent { color: $blue-light; }
+
+// A large accent glyph: +, ↔, ↓, →. Neither Archivo nor Source Serif 4 carries
+// arrows, so the stack falls through to whatever symbol font the machine has;
+// without these fallbacks the arrows render as tofu boxes on a bare Linux box.
+.reveal .glyph {
+  @include bare-block;
+  font-family: $presentation-heading-font, "Segoe UI Symbol", "Apple Symbols",
+    "Noto Sans Symbols 2", "DejaVu Sans", "Liberation Sans", sans-serif;
+  font-weight: 300;
+  color: $blue-light;
+  line-height: 1;
+}
+
+.reveal .glyph > p {
+  font: inherit;
+  color: inherit;
+  margin: 0;
+  max-width: none;
+}
+
+// --- block roles authored as spans ------------------------------------------
+//
+// The remaining roles read better inline in the source (`[text]{.lede}`), and
+// none of them depend on being a flex child. Pandoc still wraps each in a
+// `<p>`, so that wrapper must not impose its own measure or spacing on top of
+// the span's. Purely cosmetic — if a browser lacks `:has()`, the wrapper's
+// default measure applies and nothing breaks.
+.reveal p:has(> .lede),
+.reveal p:has(> .headline),
+.reveal p:has(> .display),
+.reveal p:has(> .tagline),
+.reveal p:has(> .who),
+.reveal p:has(> .sub),
+.reveal p:has(> .num),
+.reveal p:has(> .cap),
+.reveal p:has(> .note),
+.reveal p:has(> .bar),
+.reveal p:has(> .tenant),
+.reveal p:has(> .name) {
+  margin: 0;
+  max-width: none;
+}
+
+// R package names — {golem}, {plumber}, {pins}
+.reveal .pkg {
+  font-style: italic;
+  font-weight: 600;
+  color: $blue-light;
+}
+
+// On light grounds the accent blue is too pale for small text, so package
+// names take the navy there instead.
+.reveal .paper .pkg,
+.reveal .cream .pkg { color: $navy; }
+
+// A numbered step marker sitting inline before its label (slide 6).
+.reveal .step {
+  font-family: $presentation-heading-font;
+  font-weight: 300;
+  font-size: 34px;
+  color: $blue-light;
+  margin-right: 12px;
+}
+
+.reveal .label {
+  font-size: 27px;
+  font-weight: 600;
+  color: $navy;
+}
+
+// Which company owns a box (slide 17).
+.reveal .tenant {
+  @include bare-block;
+  font-size: 18px;
+  color: $blue-light;
+  margin-top: 8px;
+}
+
+// The title slide's subtitle keeps its bold runs white rather than accented.
+.reveal .tagline strong { color: inherit; }
+
+// ===========================================================================
+// 3. Spacing helpers
+// ===========================================================================
+
+.reveal .mt-a  { margin-top: auto !important; }   // push to the bottom
+.reveal .mt-sm { margin-top: 24px !important; }
+.reveal .mt-md { margin-top: 48px !important; }
+.reveal .mt-lg { margin-top: 80px !important; }
+.reveal .mb-sm { margin-bottom: 24px !important; }
+.reveal .mb-md { margin-bottom: 48px !important; }
+
+// The deck's hairline divider. Authored as `::: hrule` rather than a markdown
+// `---`, because Quarto revealjs treats a horizontal rule as a slide break and
+// would split the slide in two.
+.reveal .hrule {
+  flex: 0 0 auto;
+  width: 100%;
+  height: 1px;
+  margin: 30px 0;
+  background-color: $cream-dark;
+}
+
+.reveal .navy .hrule { background-color: $navy-mid; }
+
+.reveal hr {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid $cream-dark;
+  margin: 32px 0;
+}
+
+// ===========================================================================
+// 4. Layout primitives
+// ===========================================================================
+
+// Column grids. `.cols-2` etc. stretch to the full content width; children are
+// plain divs (`::: col`) or any block.
+.reveal .cols-2,
+.reveal .cols-3,
+.reveal .cols-4 {
+  display: grid;
+  gap: $gutter;
+  width: 100%;
+  align-items: start;
+}
+
+.reveal .cols-2 { grid-template-columns: repeat(2, 1fr); }
+.reveal .cols-3 { grid-template-columns: repeat(3, 1fr); }
+.reveal .cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+// Free-form two-part split where the halves are not equal.
+.reveal .split       { display: grid; gap: 72px; width: 100%; align-items: start; }
+.reveal .split-even  { grid-template-columns: 1fr 1fr; }
+.reveal .split-wide  { grid-template-columns: 1.4fr 1fr; }
+.reveal .split-narrow{ grid-template-columns: 1fr 1.4fr; }
+
+// A vertical hairline between two columns (slide 9's Michael | Keaton).
+.reveal .split.ruled > *:not(:first-child) {
+  border-left: 1px solid $navy-mid;
+  padding-left: 72px;
+}
+
+.reveal .cols-2 p:last-child,
+.reveal .cols-3 p:last-child,
+.reveal .cols-4 p:last-child,
+.reveal .split  p:last-child { margin-bottom: 0; }
+
+.reveal .cols-2 p,
+.reveal .cols-3 p,
+.reveal .cols-4 p,
+.reveal .split  p { max-width: none; }
+
+// Two panels with a glyph between them (slide 7's "KS&R + Ketchbrook").
+.reveal .versus {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: $gutter;
+  width: 100%;
+  align-items: center;
+}
+
+// A chain of panels joined by glyphs (slide 17's ORCA ⇄ ORCAstra ⇄ OpenAI).
+.reveal .chain {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 32px;
+  width: 100%;
+  align-items: stretch;
+}
+
+.reveal .versus > .glyph,
+.reveal .chain  > .glyph {
+  align-self: center;
+  font-size: $fs-headline-lg;
+}
+
+// Pandoc wraps consecutive lines of inline content in a single `<p>`, which
+// would become the flex/grid item and collapse everything inside it into one
+// stacked block. `display: contents` removes those wrappers from layout so the
+// spans themselves become the items — which is what makes `gap`, `flex`, and
+// `align-self` work on them. Applied only to containers that are pure layout;
+// containers with real prose keep their paragraphs.
+.reveal .row > p,
+.reveal .chips > p,
+.reveal .middle-stack > p,
+.reveal .footer-logos > p,
+.reveal .byline .col > p { display: contents; }
+
+// A row of items sharing a baseline.
+.reveal .row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.reveal .row.tight { gap: 14px; }
+
+// A hex logo next to its caption (slide 21).
+.reveal .row.hexrow {
+  gap: 28px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.reveal .row.hexrow .cap { flex: 1 1 auto; }
+
+// "UX need → backend consequence" pairs (slide 18).
+.reveal .row.exchange { gap: 20px; align-items: stretch; }
+.reveal .row.exchange .bar { flex: 1 1 0; display: flex; align-items: center; }
+.reveal .row.exchange .glyph {
+  flex: 0 0 auto;
+  align-self: center;
+  font-size: 30px;
+}
+
+// Vertically centre a container's items (grid or flex).
+.reveal .v-center { align-items: center; }
+
+// Vertically centre a column's contents, each item spanning the column.
+.reveal .middle-stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 24px;
+  height: 100%;
+  width: 100%;
+}
+
+.reveal .middle-stack > * { box-sizing: border-box; }
+.reveal .middle-stack .glyph { align-self: center; width: auto; font-size: 34px; }
+
+// Tags sharing a row split it evenly, as the pptx has them.
+.reveal .middle-stack .row .tag { flex: 1 1 0; text-align: left; }
+
+// Fills the remaining vertical space, so the block below it lands on the
+// bottom margin.
+.reveal .fill { flex: 1 1 auto; min-height: 0; width: 100%; }
+
+// Grids that fill the slide stretch their children to full height so cards and
+// cropped figures can size against them.
+.reveal .cols-2.fill,
+.reveal .cols-3.fill,
+.reveal .cols-4.fill,
+.reveal .split.fill { align-items: stretch; }
+
+.reveal .cols-2.fill > *,
+.reveal .cols-3.fill > *,
+.reveal .cols-4.fill > *,
+.reveal .split.fill  > * { min-height: 0; }
+
+// `.v-center` has to outrank the stretch above when both are present.
+.reveal .cols-2.fill.v-center,
+.reveal .cols-3.fill.v-center,
+.reveal .cols-4.fill.v-center,
+.reveal .split.fill.v-center { align-items: center; }
+
+// ---------------------------------------------------------------------------
+// Absolute placement
+//
+// The source deck is pixel-placed, and a few slides are collages that no flow
+// layout reproduces honestly. `.bleed` opens a layer covering the whole
+// 1920x1080 slide — including the margins, so images can run off the edge as
+// they do in the pptx — and `.pin` children carry the deck's own coordinates.
+// ---------------------------------------------------------------------------
+
+.reveal .bleed {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.reveal .pin {
+  position: absolute;
+  margin: 0;
+  max-width: none;
+}
+
+.reveal .bleed img,
+.reveal img.pin {
+  max-width: none;
+  max-height: none;
+  border: 1px solid $cream-dark;
+}
+
+// ===========================================================================
+// 5. Components
+// ===========================================================================
+
+// --- chips: small labelled pills -------------------------------------------
+// Outlined on light grounds (slide 5), solid $navy-mid on navy (chapter slides).
+.reveal .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.reveal .chip {
+  display: inline-block;
+  padding: 16px 32px;
+  font-size: $fs-body;
+  font-weight: 600;
+  line-height: 1.2;
+  color: $navy;
+  border: 1px solid $navy;
+  white-space: nowrap;
+}
+
+.reveal .navy .chip {
+  font-weight: 400;
+  font-size: $fs-small;
+  color: $blue-pale;
+  background-color: $navy-mid;
+  border-color: $navy-mid;
+}
+
+// --- tags: solid navy labels (slide 13's "UI spec" / "API contract") -------
+.reveal .tag {
+  display: inline-block;
+  padding: 20px 28px;
+  font-size: 23px;
+  color: $blue-light;
+  background-color: $navy;
+}
+
+// --- bars: full-width labelled rows ---------------------------------------
+.reveal .bar {
+  display: block;
+  padding: 20px 28px;
+  font-size: 25px;
+  font-weight: 600;
+  color: $navy;
+  background-color: $white;
+}
+
+.reveal .bar.solid  { color: $white; background-color: $navy; font-weight: 400; }
+.reveal .bar.cream  { color: $navy;  background-color: $cream; font-weight: 400; }
+.reveal .cream .bar { background-color: $white; }
+
+// --- cards: the deck's panel treatment ------------------------------------
+.reveal .card {
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  background-color: $white;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.reveal .card.cream  { background-color: $cream; }
+.reveal .card.navy   { background-color: $navy; color: $blue-pale; }
+.reveal .card.navy .sub { color: $white; }
+.reveal .card.navy .cap { color: $blue-muted; }
+.reveal .card.navy .accent { color: $blue-light; }
+.reveal .card.plain  { background: none; padding: 0; }
+.reveal .card .cap   { max-width: none; }
+.reveal .card p:last-child { margin-bottom: 0; }
+
+// Centres a card's contents both ways (slide 17's ORCA / ORCAstra / OpenAI).
+.reveal .card.centered {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+// Pins a card's caption to its bottom edge (slide 21).
+.reveal .card .foot { margin-top: auto; }
+
+// --- figures ---------------------------------------------------------------
+// The deck frames screenshots in a 1px tan/cream border. Images always scale
+// to fit their box rather than overflowing the slide.
+.reveal figure,
+.reveal .figure { margin: 0; }
+
+.reveal img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  object-fit: contain;
+  margin: 0;
+  border: 0;
+  box-shadow: none;
+  background: none;
+}
+
+// The deck frames screenshots in a panel with a hairline border, and lets the
+// panel's own fill show wherever the image is shorter than the box.
+.reveal .frame {
+  display: block;
+  width: 100%;
+  background-color: $cream;
+  border: 1px solid $cream-dark;
+  box-sizing: border-box;
+  line-height: 0;
+}
+
+.reveal .cream .frame { background-color: $white; border-color: $cream-dark; }
+.reveal .navy  .frame { background-color: $navy-mid; border-color: $navy-mid; }
+
+.reveal .frame img {
+  width: 100%;
+  height: auto;
+  max-height: none;
+}
+
+// `.crop` fills the frame and clips the overflow, anchored to the top so a tall
+// screenshot shows its head rather than being squashed. Without it the image
+// keeps its own aspect ratio and the frame's fill shows below — which is what
+// the pptx does on slide 6.
+.reveal .frame.crop { overflow: hidden; }
+
+.reveal .frame.crop img {
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+// A loose overlapping collage (slides 11 and 12).
+.reveal .collage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.reveal .collage img {
+  position: absolute;
+  border: 1px solid $cream-dark;
+}
+
+// Logo lockups — sized by height so different logo aspect ratios line up.
+// `img` may itself carry the class, hence the doubled selectors.
+.reveal .logo-xs, .reveal .logo-xs img { height: 34px;  width: auto; }
+.reveal .logo-sm, .reveal .logo-sm img { height: 56px;  width: auto; }
+.reveal .logo-md, .reveal .logo-md img { height: 90px;  width: auto; }
+.reveal .logo-lg, .reveal .logo-lg img { height: 200px; width: auto; }
+.reveal .logo-xl, .reveal .logo-xl img { height: 155px; width: auto; }
+.reveal .hex,     .reveal .hex img     { height: 108px; width: auto; flex: 0 0 auto; }
+
+// ===========================================================================
+// 6. Slide variants
+// ===========================================================================
+
+// A single centred statement — the deck's navy interstitials.
+.reveal .slides > section.statement {
+  justify-content: center;
+}
+
+.reveal .statement h2 {
+  font-size: $fs-statement;
+  line-height: 1.1;
+  max-width: 1600px;
+}
+
+.reveal .statement .lede { margin-top: 32px; }
+
+// Chapter dividers: label, big title, hairline, tool chips.
+.reveal .slides > section.chapter {
+  justify-content: center;
+}
+
+.reveal .chapter h2 {
+  font-size: $fs-chapter;
+  line-height: 1.05;
+  max-width: 1650px;
+  margin-bottom: 40px;
+}
+
+.reveal .chapter .eyebrow {
+  color: $blue-light;
+  margin-bottom: 24px;
+}
+
+// "Michael" / "Keaton" tucked into the top right of a chapter slide.
+.reveal .speaker {
+  position: absolute;
+  top: 402px;
+  right: $margin-x;
+  font-size: $fs-eyebrow;
+  color: $blue-muted;
+}
+
+// Title slide. The wordmark sits low on the slide, as in the pptx.
+.reveal .slides > section.title-slide-custom { justify-content: flex-start; }
+.reveal .title-slide-custom .display { margin: 210px 0 34px; }
+
+.reveal .title-slide-custom .tagline {
+  @include bare-block;
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: $white;
+  max-width: 1560px;
+}
+
+.reveal .byline {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+}
+
+.reveal .byline .rule { background-color: $navy-mid; height: 60px; }
+.reveal .byline > *:first-child { padding-left: 120px; }
+.reveal .byline > *:last-child  { padding-right: 0; text-align: right; }
+
+.reveal .byline .name {
+  @include bare-block;
+  font-size: 28px;
+  font-weight: 600;
+  color: $white;
+}
+
+.reveal .byline .role {
+  @include bare-block;
+  font-size: $fs-small;
+  color: $blue-muted;
+}
+
+// Closing slide.
+.reveal .slides > section.closing {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.reveal .closing h2 { font-size: $fs-chapter; color: $white; }
+
+.reveal .closing .footer-logos {
+  position: absolute;
+  left: $margin-x;
+  right: $margin-x;
+  bottom: 60px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+// ===========================================================================
+// 7. Reveal chrome
+// ===========================================================================
+
+.reveal .slide-number {
+  font-family: $font-family-sans-serif;
+  font-size: 18px;
+  background: none;
+  color: $blue-muted;
+}
+
+.reveal .progress { color: $blue-light; height: 4px; }
+
+.reveal .controls { color: $blue-muted; }
+
+// Speaker notes and the print view inherit the sans stack.
+.reveal aside.notes { font-family: $font-family-sans-serif; }
+
+// Overview / print: keep the section grounds visible.
+.reveal.overview .slides > section { border: 1px solid $navy-mid; }
