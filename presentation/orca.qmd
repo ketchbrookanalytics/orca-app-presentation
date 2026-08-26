@@ -16,26 +16,18 @@ POSIT::CONF(2026)
 
 [a **collaboration to build** an AI-powered Shiny app, deployed on Posit Team]{.tagline}
 
-::::: {.byline .mt-a}
-:::: col
-![](images/keaton-headshot.png){.headshot}
-
-::: meta
+:::: {.byline .mt-a}
+::: col
 [Keaton Wilson]{.name}
 [(Previously) KS&R — Director, Solutions]{.role}
 :::
-::::
-:::: rule
-::::
-:::: col
-![](images/michael-headshot.png){.headshot}
-
-::: meta
+::: rule
+:::
+::: col
 [Michael Thomas]{.name}
 [Ketchbrook Analytics — Chief Data Scientist]{.role}
 :::
 ::::
-:::::
 
 ::: notes
 Keaton: welcome, introduce the talk and both presenters.
@@ -221,10 +213,14 @@ Feedback: Have Keaton talk about *why* KS&R sought out an external collaborator 
 A DELIBERATE CONSTRAINT
 :::
 
-::: {.bullets .lg .mt-lg}
-- Keeping AI spend, API keys, and job orchestration in-house **lowered institutional and financial risk** — an external partner touching the backend carries more exposure than one shaping the UI.
-- It also meant Ketchbrook could **move fast on the front end** without waiting on KS&R's internal security review for every change.
+:::: {.cols-2 .mt-lg}
+::: col
+[Keeping AI spend, API keys, and job orchestration in-house lowered institutional and financial risk — an external partner touching the backend carries more exposure than one shaping the UI.]{.lede}
 :::
+::: col
+[It also meant Ketchbrook could move fast on the front end without waiting on KS&R's internal security review for every change.]{.lede}
+:::
+::::
 
 ::: notes
 Keaton: why front-end external, back-end in-house? Lower institutional and financial risk for an external partner to touch the AI-spend backend versus the UI. This is a limitation worth naming early, not saving for the end.
@@ -236,29 +232,22 @@ Keaton: why front-end external, back-end in-house? Lower institutional and finan
 TWO LENSES ON ONE BUILD
 :::
 
-::::: {.split .split-even .ruled .fill .mt-md}
-:::: col
+:::: {.split .split-even .ruled .fill .mt-md}
+::: col
 [Michael]{.who}
 
 [The Shiny front end]{.sub}
 
-::: bullets
-- Job submission, response review, interactive category editing
-- Built with [golem]{.pkg} for long-term maintainability and modularity
+Job submission, response review, interactive category editing, all with [{golem}]{.pkg} for long term maintainability and modularity.
 :::
-::::
-:::: col
+::: col
 [Keaton]{.who}
 
 [The Posit-based back end]{.sub}
 
-::: bullets
-- [plumber]{.pkg} middleware and [pins]{.pkg} for data hand-off
-- Scheduled Quarto workflows
-- Every piece deployed on **Posit Connect**
+[{plumber}]{.pkg} middleware, [{pins}]{.pkg}, and scheduled Quarto workflows.
 :::
 ::::
-:::::
 
 ::: hrule
 :::
@@ -272,7 +261,7 @@ Next — Michael, on designing together before writing code →
 :::
 
 ::: notes
-Keaton: two lenses on what follows — Michael on the Shiny front end (job submission, response review, interactive code editing), me on the Posit-based back end (plumber, pins, scheduled Quarto workflows) — all of it deployed on Posit Connect. Over to Michael.
+Keaton: two lenses on what follows — Michael on the Shiny front end (job submission, response review, interactive code editing), me on the Posit-based back end (golem, plumber, pins, scheduled workflows). Over to Michael.
 :::
 
 ## Designing together, before writing a line of code {.navy .chapter}
@@ -365,7 +354,7 @@ THE KEY MOVE
 Michael: the key move — translating a research workflow (submit a job, review AI suggestions, edit/approve) into a UI spec and an API contract at the same time, so neither side was guessing about the other's needs.
 :::
 
-## A contract, agreed on visually, before a single [plumber]{.pkg} endpoint existed. {.navy .statement}
+## A contract, agreed on visually, before a single [{plumber}]{.pkg} endpoint existed. {.navy .statement}
 
 ::: notes
 Michael: this is the front end making the back end's life easier — a clear contract, agreed on visually, before a single plumber endpoint existed.
@@ -386,8 +375,8 @@ Michael
 
 ::: chips
 [GitHub Issues & PRs]{.chip}
-[[golem]{.pkg}]{.chip}
-[[plumber]{.pkg}]{.chip}
+[{golem}]{.chip}
+[{plumber}]{.chip}
 :::
 
 ::: notes
@@ -419,63 +408,35 @@ Michael: how the teams worked async across two companies — GitHub Issues and P
 THE ARCHITECTURE THAT MADE IT POSSIBLE
 :::
 
-::::: {.arch .fill .mt-md}
-:::: {.card .centered style="grid-area:1/1/2/4;"}
+:::: {.chain .fill .mt-md}
+::: {.card .centered}
 [ORCA]{.sub}
-[[golem]{.pkg} Shiny app]{.cap}
+[{golem} Shiny app]{.cap}
 [Ketchbrook]{.tenant}
-::::
-
-::: {.glyph style="grid-area:1/4/2/5;"}
+:::
+::: glyph
 ↔
 :::
-
-:::: {.card .navy .centered style="grid-area:1/5/2/8;"}
+::: {.card .navy .centered}
 [ORCAstra]{.sub}
-[[plumber]{.pkg} API]{.cap}
+[{plumber} API]{.cap}
 [KS&R]{.tenant}
-::::
-
-::: {.glyph style="grid-area:1/8/2/9;"}
-→
 :::
-
-:::: {.card .centered .muted style="grid-area:1/9/2/12;"}
-[OpenAI]{.sub}
-[batch classification]{.cap}
-::::
-
-::: {.wire .up-right .muted style="grid-area:2/4/3/6;"}
-:::
-
-::: {.wire .up-left .muted style="grid-area:2/7/3/9;"}
-:::
-
-:::: {.card .centered .muted style="grid-area:3/3/4/6;"}
-[ORCAdb]{.sub}
-[[pins]{.pkg} metadata & run history]{.cap}
-[KS&R]{.tenant}
-::::
-
-::: {.glyph .muted style="grid-area:3/6/4/7;"}
+::: glyph
 ↔
 :::
-
-:::: {.card .centered .muted style="grid-area:3/7/4/10;"}
-[ORCAwatch]{.sub}
-[scheduled Quarto job — writes .sav / .csv / .rds to the network share, then emails the submitter]{.cap}
-[KS&R]{.tenant}
+::: {.card .centered}
+[OpenAI]{.sub}
+[classification engine]{.cap}
+:::
 ::::
-:::::
 
 ::: {.kicker}
-The UI iterated against a stable API surface while the heavier logic behind it kept changing. **Everything greyed out here we'll come back to.**
+The UI iterated against a stable API surface while the heavier logic behind it kept changing.
 :::
 
 ::: notes
-Michael: the architecture that made this possible. Focus on the top row: a golem-based Shiny app decoupled from a plumber API for async job processing, so the UI could be built and iterated against a stable API surface while the heavier AI/coding logic evolved behind it. ORCAstra is what actually talks to the OpenAI batch API — the front end never holds a key.
-
-Don't dwell on the greyed pieces — just name them so the shape is on screen: ORCAdb is a pins board on Connect holding batch metadata and run history; ORCAwatch is a scheduled Quarto document that polls ORCAstra for finished jobs, reads and updates that pin, and writes the cleaned files out to the network share, then emails the submitter once delivery is complete. We come back to both in chapter 3.
+Michael: the architecture that made this possible — a golem-based Shiny app decoupled from a plumber API for asynchronous job processing, so the UI could be built and iterated against a stable API surface while the heavier AI/coding logic evolved behind it.
 :::
 
 ## UX needs and backend constraints, both ways {.paper}
@@ -535,7 +496,7 @@ Keaton
 :::
 
 ::: chips
-[[pins]{.pkg}]{.chip}
+[{pins}]{.chip}
 [Posit Connect]{.chip}
 [Scheduled Quarto]{.chip}
 :::
@@ -561,51 +522,33 @@ WHAT MADE PARALLEL WORK POSSIBLE
 
 ::: {.row .hexrow}
 ![](images/hex-golem.png){.hex}
-[[golem]{.pkg} for modularity and maintainability]{.cap}
+[[{golem}]{.pkg} for modularity and maintainability]{.cap}
 :::
 
 ::: {.row .hexrow}
 ![](images/hex-bslib.png){.hex}
-[[bslib]{.pkg} for theming]{.cap}
-:::
-
-::: {.row .hexrow}
-![](images/logo-brandyml.png){.hex}
-[[brand.yml]{.pkg} — KS&R's brand book dropped straight in]{.cap}
+[[{bslib}]{.pkg}]{.cap}
 :::
 ::::
 :::: card
 [ORCAstra]{.sub}
 
-::: {.row .hexrow}
-![](images/hex-plumber.png){.hex}
-[[plumber]{.pkg} — a well-defined surface per core function, hosted internally]{.cap}
-:::
-
-::: {.row .hexrow}
-![](images/hex-ksrai.png){.hex}
-[[ksRAI]{.pkg} — our internal package wrapping the OpenAI API]{.cap}
+::: foot
+[{plumber} async API]{.cap}
 :::
 ::::
 :::: card
 [ORCAdb]{.sub}
 
-::: {.row .hexrow}
-![](images/hex-pins.png){.hex}
-[[pins]{.pkg} — versioned metadata and run history]{.cap}
+::: foot
+[{pins} versioned metadata]{.cap}
 :::
 ::::
 :::: card
 [ORCAwatch]{.sub}
 
-::: {.row .hexrow}
-![](images/hex-quarto.png){.hex}
-[Scheduled Quarto batch job on Connect]{.cap}
-:::
-
-::: {.row .hexrow}
-![](images/hex-purrr.png){.hex}
-[[purrr]{.pkg} — the API returns deeply nested lists; this is what flattens them]{.cap}
+::: foot
+[Scheduled Quarto batch job]{.cap}
 :::
 ::::
 :::::
@@ -619,15 +562,7 @@ Blythe's test: would we have designed it this way even if it weren't an AI app? 
 :::
 
 ::: notes
-Keaton: modularizing the backend independently from the front end is what made the parallel, non-blocking collaboration possible. Four pieces, each with one job.
-
-ORCA — Michael's side. Worth naming brand.yml here: KS&R's brand book went in as a config file, so the app picked up our colours and type without anyone hand-porting them. That's the constraints-as-a-gift slide paying off in practice.
-
-ORCAstra — the plumber point is the one to land: we built a well-defined surface for each core function and hosted them internally, so the front end could call a stable endpoint while everything behind it kept changing. It leans on ksRAI, an internal R package we wrote to make interfacing with the OpenAI API straightforward — cost estimation, batch submission, response parsing — so that logic lives in one tested place instead of being scattered through the API.
-
-ORCAdb — pins on Connect for versioned metadata and run history.
-
-ORCAwatch — a scheduled Quarto document on Connect. purrr is not decoration here: the batch API returns deeply nested lists, and the shape of the coding data is nested too, so the whole wrangling step is map/pluck work.
+Keaton: modularizing the backend independently from the front end is what made the parallel, non-blocking collaboration possible. ORCAstra for async processing, ORCAdb/pins for versioned metadata, ORCAwatch for scheduled batch logging and delivery.
 :::
 
 ## I really wanted to dig into AI best practices here. {.paper .statement}
@@ -687,7 +622,7 @@ A shared visual contract — Mural, Excalidraw, or a whiteboard, before anyone o
 Issue-driven development — a shared source of truth across company lines. Don't skimp on detail in your Issues & PR bodies.
 :::
 ::: {.card .cream}
-An architecture — [golem]{.pkg} + [plumber]{.pkg} + [pins]{.pkg} — that lets both sides move independently.
+An architecture — [{golem}]{.pkg} + [{plumber}]{.pkg} + [{pins}]{.pkg} — that lets both sides move independently.
 :::
 ::::
 
@@ -697,35 +632,11 @@ Michael: if you're building Shiny apps with a partner team — agency/client, re
 
 ## Thank you {.navy .closing}
 
-::::: {.people .mt-lg}
-:::: person
-![](images/keaton-headshot.png){.headshot-lg}
-
-[Keaton Wilson]{.name}
-[(Previously) KS&R — Director, Solutions]{.role}
-[AI Engineer — CHG Healthcare]{.role}
-
-::: {.qr .placeholder}
-LinkedIn QR
-:::
-::::
-:::: person
-![](images/michael-headshot.png){.headshot-lg}
-
-[Michael Thomas]{.name}
-[Ketchbrook Analytics — Chief Data Scientist]{.role}
-
-::: {.qr .placeholder}
-LinkedIn QR
-:::
-::::
-:::::
-
 ::: footer-logos
 ![](images/ksr-logo.png){.logo-xs}
 ![](images/ketchbrook-wordmark.png){.logo-sm}
 :::
 
 ::: notes
-Both: thank the audience, invite questions. Point at the QR codes — connect with us on LinkedIn.
+Both: thank the audience, invite questions.
 :::
