@@ -957,7 +957,7 @@ $code-color: $navy !default;
   width: 100%;
 }
 
-.reveal .byline .rule { background-color: $navy-mid; height: 96px; }
+.reveal .byline .rule { background-color: $navy-mid; height: 120px; }
 
 // Headshot + name/role sit on one row; the right-hand column mirrors so both
 // photos hug the centre rule.
@@ -997,6 +997,14 @@ $code-color: $navy !default;
   @include bare-block;
   font-size: $fs-small;
   color: $blue-muted;
+}
+
+// A third byline line: what each of us owned *on this project* — deliberately
+// scoped to ORCA rather than reading as a general job description.
+.reveal .byline .hat {
+  @include bare-block;
+  font-size: $fs-small;
+  color: $blue-light;
 }
 
 // Closing slide.

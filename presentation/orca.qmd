@@ -23,6 +23,7 @@ POSIT::CONF(2026)
 ::: meta
 [Keaton Wilson]{.name}
 [(Previously) KS&R — Director, Solutions]{.role}
+[On ORCA: the back-end pipelines]{.hat}
 :::
 ::::
 :::: rule
@@ -33,6 +34,7 @@ POSIT::CONF(2026)
 ::: meta
 [Michael Thomas]{.name}
 [Ketchbrook Analytics — Chief Data Scientist]{.role}
+[On ORCA: the interface]{.hat}
 :::
 ::::
 :::::
@@ -42,7 +44,7 @@ Keaton: welcome, introduce the talk and both presenters.
 
 Share the function of what we do. Share the people that we help. Share the impact of that work.
 
-Feedback: let's do our 2 intros and really emphasize the fact that we work w/ two different companies; set up that we're going to talk about collaboration — talk about the different ways our brain works: "Michael is the X guy", "Keaton is the Y guy", etc.
+~~Feedback: let's do our 2 intros and really emphasize the fact that we work w/ two different companies; set up that we're going to talk about collaboration — talk about the different ways our brain works: "Michael is the X guy", "Keaton is the Y guy", etc.~~ (addressed)
 
 Let's be sure to make it very clear in our setup (this slide & beyond) that this talk is about *collaboration* with examples from our ORCA use case, as opposed to a deep-dive into a specific app.
 :::
@@ -67,55 +69,29 @@ Keaton, opening beat: hold for the laugh. Everyone in this room has been on this
 
 How many folks in the room typically work as a lone wolf solo data scientist at their day job?
 
-Feedback: Can we show another meme/gif either at the end (or pretty much right after this) with the Elaine dancing gif when we reveal that the collaboration actually worked great?
+~~Feedback: Can we show another meme/gif either at the end (or pretty much right after this) with the Elaine dancing gif when we reveal that the collaboration actually worked great?~~ (addressed)
 :::
 
-## Three ways cross-team builds fall apart {.cream}
+## {.cream}
 
+:::: {.split .split-even .v-center .fill}
+::: col
+![](images/elaine-dancing-laughing-pd3cj0iqjamwfo13.gif){width="880"}
+:::
+::: col
 ::: {.eyebrow}
-A FAMILIAR FAILURE MODE
+BUT IT DOESN'T HAVE TO BE
 :::
 
-:::: {.cols-3 .mt-lg}
-::: col
-[01]{.num}
-[No clear division of labor]{.sub}
-
-One person quietly ends up carrying the whole project.
-:::
-::: col
-[02]{.num}
-[No shared tooling]{.sub}
-
-Work happens in silos, stitched together at the last minute.
-:::
-::: col
-[03]{.num}
-[No shared goals or guardrails]{.sub}
-
-Different vision, even if division of labor is clear, serving the part and not the whole.
+[This one actually worked.]{.headline}
 :::
 ::::
 
 ::: notes
-You might have good reason to avoid working on a team; maybe you've been burned by one of the three ways that team data science falls apart.
-
-Yes, today's talk involves a Shiny app, but it's really a story about an effective collaboration model between a small team working in Market Research and a data and software development consultants. A model that leveraged UI/UX best practices, a careful and conscious division of labor and a Posit-enriched tech stack to facilitate.
+Keaton: ...but it doesn't have to go that way. This one worked — two companies, two codebases, one app, and we still like each other. The rest of the talk is how.
 :::
 
-## This wasn't that. {.navy .statement}
-
-[A front-end team and a back-end team, at **two different companies**, who had to depend on each other to ship anything at all — and built the collaboration that made that dependency work.]{.lede}
-
-::: notes
-Keaton: pivot hard. This still happens in industry — a stakeholder handing over a one-paragraph spec with no back-and-forth. ORCA is the opposite story: two companies who had to depend on each other, and made that dependency work.
-
-Feedback: We're giving too much info here — we're diving into the talk too quickly here; let's do a little less of the collaboration setup.
-
-Start the story w/ the bookends: it started w/ a problem, ended with a solution, and *then* we'll fill in the middle after that.
-:::
-
-## Coding open-end survey responses is slow, manual, and inconsistent at scale {.paper}
+## Categorizing open-end survey responses is slow, manual, and inconsistent at scale {.paper}
 
 ::: {.eyebrow}
 WHY ORCA EXISTS
@@ -135,39 +111,78 @@ Keaton: open-end survey coding is slow, manual, and inconsistent at scale. AI ca
 Michael: and when we say *coding*, we don't mean R or Python code -- we're talking about taking free-text data from user surveys and tagging them as belonging to one of many possible fixed categories.
 :::
 
-## ORCA is now how KS&R's researchers code **thousands** of open-end responses {.paper .headline-right}
+## Upload data {.paper}
 
 ::: {.eyebrow}
-What is ORCA?
+WHAT IS ORCA — STEP 1 OF 4
 :::
 
-:::: {.cols-4 .fill .mt-md}
-::: col
-[![](images/orca-01-upload-data.png)]{.frame style="height:433px;"}
-
-[1]{.step} [Upload data]{.label}
-:::
-::: col
-[![](images/orca-02-define-codes.png)]{.frame style="height:433px;"}
-
-[2]{.step} [Define codes]{.label}
-:::
-::: col
-[![](images/orca-03-review-initiate.png)]{.frame style="height:433px;"}
-
-[3]{.step} [Review & initiate]{.label}
-:::
-::: col
-[![](images/orca-04-job-status.png)]{.frame style="height:433px;"}
-
-[4]{.step} [Track & pick up]{.label}
-:::
+:::: {.fill .mt-md style="display:flex; align-items:center; justify-content:center;"}
+[![](images/orca-01-upload-data.png)]{.frame style="width:725px;"}
 ::::
 
 ::: notes
-Keaton: the proof is in the pudding. ORCA is now how KS&R's researchers code thousands of open-ended survey responses with AI — in production, in daily use.
+Keaton: step one — the researcher uploads the open-end response data.
+:::
 
-Feedback: Let's blow up these images so that its one image per slide x 4 slides.
+## Define codes {.paper}
+
+::: {.eyebrow}
+WHAT IS ORCA — STEP 2 OF 4
+:::
+
+:::: {.fill .mt-md style="display:flex; align-items:center; justify-content:center;"}
+[![](images/orca-02-define-codes.png)]{.frame style="width:790px;"}
+::::
+
+::: notes
+Keaton: step two — they define the codeframe the AI will code against.
+:::
+
+## Review &amp; initiate {.paper}
+
+::: {.eyebrow}
+WHAT IS ORCA — STEP 3 OF 4
+:::
+
+:::: {.fill .mt-md style="display:flex; align-items:center; justify-content:center;"}
+[![](images/orca-03-review-initiate.png)]{.frame style="width:825px;"}
+::::
+
+::: notes
+Keaton: step three — review the setup and kick off the job.
+:::
+
+## Track &amp; pick up {.paper}
+
+::: {.eyebrow}
+WHAT IS ORCA — STEP 4 OF 4
+:::
+
+:::: {.fill .mt-md style="display:flex; align-items:center; justify-content:center;"}
+[![](images/orca-04-job-status.png)]{.frame style="width:725px;"}
+::::
+
+::: {.kicker}
+This is now how KS&R's researchers code **thousands** of open-end responses.
+:::
+
+::: notes
+Keaton: step four — track the job and pick the results back up when it's done.
+
+The proof is in the pudding: ORCA is now how KS&R's researchers code thousands of open-ended survey responses with AI — in production, in daily use.
+:::
+
+## This wasn't that. {.navy .statement}
+
+[A front-end team and a back-end team, at **two different companies**, who had to depend on each other to ship anything at all — and built the collaboration that made that dependency work.]{.lede}
+
+::: notes
+Keaton: you've now seen the problem and the thing we shipped. Here's the part that isn't on the screen: this was built by a front-end team and a back-end team at two different companies, who had to depend on each other to ship anything at all. The rest of the talk fills in that middle.
+
+~~Feedback: We're giving too much info here — we're diving into the talk too quickly here; let's do a little less of the collaboration setup.~~ (addressed: setup trimmed to the two meme slides, the "three ways" slide parked at the bottom of this file)
+
+~~Start the story w/ the bookends: it started w/ a problem, ended with a solution, and *then* we'll fill in the middle after that.~~ (addressed: problem → demo → this turn slide)
 :::
 
 ## One system, two companies {.cream}
@@ -200,6 +215,10 @@ A CROSS-COMPANY BUILD
 ::::
 :::::
 
+::: {.kicker}
+Why not in-house? A one-developer team, several competing priorities, and a lift that needed to happen **now**.
+:::
+
 ::: notes
 The work to build this solution was very explicitly divided: KS&R owned the back-end, server-side code, and the front-end user interface was Ketchbrook's responsibility.
 
@@ -212,7 +231,9 @@ Maybe this sounds scary, but there are some obvious benefits to this:
 
 Keaton: ORCA is a collaboration talk, not just a tech talk. KS&R (research firm, backend/infra owner) and Ketchbrook Analytics (consultancy, front-end/UX owner) designed and built this together, across a company boundary, as part of KS&R's DS&I project-teams model.
 
-Feedback: Have Keaton talk about *why* KS&R sought out an external collaborator as opposed to just doing it themselves in-house.
+Keaton, the why: at that point DS&I was a small team — one developer. The work was real and the timeline mattered, and we were balancing it against several other priorities. Partnering wasn't about missing skills; it was speed and capacity. We could either build ORCA slowly and serially, or bring in a partner and build it in parallel.
+
+~~Feedback: Have Keaton talk about *why* KS&R sought out an external collaborator as opposed to just doing it themselves in-house.~~ (addressed)
 :::
 
 ## Front-end external, back-end in-house {.paper}
@@ -313,7 +334,7 @@ SHARED UNDERSTANDING, FIRST
 :::
 
 ::: notes
-Feedback: For each phase of the project (before, during, after), we need to have an *active takeaway* for the audience that reinforces the **collaboration**.
+~~Feedback: For each phase of the project (before, during, after), we need to have an *active takeaway* for the audience that reinforces the **collaboration**.~~ (addressed: one takeaway slide now closes each chapter — "Draw the contract before you build it", "Make the issue the interface", "Build a seam, not a handoff")
 
 Michael: shared understanding first. Wireframing sessions in Mural, where UI mockups and API/data shape were sketched in the same room before either side committed to an implementation.
 :::
@@ -369,6 +390,21 @@ Michael: the key move — translating a research workflow (submit a job, review 
 
 ::: notes
 Michael: this is the front end making the back end's life easier — a clear contract, agreed on visually, before a single plumber endpoint existed.
+:::
+
+## Draw the contract before you build it {.paper}
+
+::: {.eyebrow}
+TAKEAWAY — BEFORE YOU BUILD
+:::
+
+::: {.bullets .lg .mt-lg}
+- Before your next cross-team project starts, get both sides in front of **one shared visual artifact** — Mural, Excalidraw, a whiteboard photo. Not a spec document.
+- Argue about it there, while changing it costs nothing. Every disagreement you surface on the wireframe is one you don't discover in a pull request three weeks later.
+:::
+
+::: notes
+Michael, active takeaway for chapter 1: the thing to actually do on Monday is get a shared visual artifact in front of both teams before anyone opens an editor. Cheap to change, and it forces the disagreements out early.
 :::
 
 ## Building in parallel, without blocking each other {.navy .chapter}
@@ -513,12 +549,27 @@ Michael: a UX need — live job status, inline editing of AI output — drove a 
 
 [Issues, PRs, and a contract everyone could point to — that's why this collaboration held together.]{.lede}
 
+::: notes
+Michael: this answers Keaton's opening question directly — why did this collaboration succeed — with receipts, not just an assertion. Over to Keaton for chapter 3.
+:::
+
+## Make the issue the interface {.paper}
+
+::: {.eyebrow}
+TAKEAWAY — WHILE YOU BUILD
+:::
+
+::: {.bullets .lg .mt-lg}
+- Write Issues and PR bodies for **someone who doesn't share your codebase, your standup, or your employer**. Detail that feels excessive inside one team is the bare minimum across two.
+- If a decision only exists in a call or a DM, it doesn't exist. Put it where the other company can find it without asking you.
+:::
+
 ::: {.next .mt-lg}
 Next — Keaton, on earning trust in production →
 :::
 
 ::: notes
-Michael: this answers Keaton's opening question directly — why did this collaboration succeed — with receipts, not just an assertion. Over to Keaton for chapter 3.
+Michael, active takeaway for chapter 2: over-document across the boundary. The written trail is what let us work in parallel without blocking each other — and it's the habit that transfers to any partner team. Over to Keaton for chapter 3.
 :::
 
 ## Separation of concerns, in production {.navy .chapter}
@@ -655,12 +706,27 @@ Keaton: I wanted to dig into AI-specific best practices here — prompt design, 
 :::
 ::::
 
-::: {.next}
+::: notes
+Keaton: pins for versioned metadata mean every AI-coded result is traceable to a model version and data snapshot. Scheduled batch workflows leave an audit trail. Ties back to the front end: the categorization spec and context interface is where human judgment stays in the loop — and it only works because the backend guarantees what's underneath is versioned and reproducible.
+:::
+
+## Build a seam, not a handoff {.paper}
+
+::: {.eyebrow}
+TAKEAWAY — AFTER YOU SHIP
+:::
+
+::: {.bullets .lg .mt-lg}
+- Pick the boundary between the two teams **deliberately**, then make it something both sides can build against without waiting — an API, a versioned artifact, a pinned dataset.
+- A good seam means either side can be replaced, rewritten, or handed to someone new without renegotiating the whole system. That's what makes the collaboration outlast the project.
+:::
+
+::: {.next .mt-lg}
 Next — Michael, closing us out →
 :::
 
 ::: notes
-Keaton: pins for versioned metadata mean every AI-coded result is traceable to a model version and data snapshot. Scheduled batch workflows leave an audit trail. Ties back to the front end: the categorization spec and context interface is where human judgment stays in the loop — and it only works because the backend guarantees what's underneath is versioned and reproducible.
+Keaton, active takeaway for chapter 3: the architecture is what lets the collaboration survive. Choose the seam on purpose, make it stable, and both sides stay unblocked long after the initial build.
 :::
 
 ## Not just ORCA — a repeatable model for cross-company collaboration on the Posit stack. {.cream .statement}
@@ -703,6 +769,7 @@ Michael: if you're building Shiny apps with a partner team — agency/client, re
 
 [Keaton Wilson]{.name}
 [(Previously) KS&R — Director, Solutions]{.role}
+[On ORCA: the back-end pipelines]{.hat}
 [AI Engineer — CHG Healthcare]{.role}
 
 ::: {.qr .placeholder}
@@ -714,6 +781,7 @@ LinkedIn QR
 
 [Michael Thomas]{.name}
 [Ketchbrook Analytics — Chief Data Scientist]{.role}
+[On ORCA: the interface]{.hat}
 
 ::: {.qr .placeholder}
 LinkedIn QR
@@ -729,3 +797,38 @@ LinkedIn QR
 ::: notes
 Both: thank the audience, invite questions. Point at the QR codes — connect with us on LinkedIn.
 :::
+
+<!--
+## Three ways cross-team builds fall apart {.cream}
+
+::: {.eyebrow}
+A FAMILIAR FAILURE MODE
+:::
+
+:::: {.cols-3 .mt-lg}
+::: col
+[01]{.num}
+[No clear division of labor]{.sub}
+
+One person quietly ends up carrying the whole project.
+:::
+::: col
+[02]{.num}
+[No shared tooling]{.sub}
+
+Work happens in silos, stitched together at the last minute.
+:::
+::: col
+[03]{.num}
+[No shared goals or guardrails]{.sub}
+
+Different vision, even if division of labor is clear, serving the part and not the whole.
+:::
+::::
+
+::: notes
+You might have good reason to avoid working on a team; maybe you've been burned by one of the three ways that team data science falls apart.
+
+Yes, today's talk involves a Shiny app, but it's really a story about an effective collaboration model between a small team working in Market Research and a data and software development consultants. A model that leveraged UI/UX best practices, a careful and conscious division of labor and a Posit-enriched tech stack to facilitate.
+:::
+-->
