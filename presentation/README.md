@@ -131,6 +131,26 @@ for R package names. Components: `.chip`, `.tag`, `.bar` (`.solid`, `.cream`),
 `.card` (`.cream`, `.navy`, `.centered`, `.plain`) with `::: foot` to pin a
 caption to a card's bottom, and `.frame` (`.crop`) for framed screenshots.
 
+`.shot` is a slide-level class for the four "what is ORCA" walkthrough slides:
+a narrow left column (eyebrow + `.headline`, and the kicker on step 4) beside a
+`.frame` screenshot that fills the full height of the slide. Those slides carry
+an empty `##` — the headline lives inside the column — and the `.frame` there
+drops its border and is placed absolutely so the image can size against the
+column rather than a hand-set width.
+
+Screenshot annotations on those slides are `.hl` spans written *inside* the
+`.frame` span, positioned in percentages of the image (the frame shrink-wraps
+to the image, so percentages map to the screenshot itself). `data-label` prints
+a chip above the ring; `.chip-right` aligns that chip to the ring's right edge
+and `.below` drops it under the ring — both are there to keep a label off the
+app's own text. Rings and chips fade in ~0.4s after the slide lands, off the
+slide's `.present` class (no fragments, so the click count is unchanged):
+
+```markdown
+[![](images/orca-01-upload-data.png)[]{.hl data-label="Pick columns, filter rows"
+  style="left:8.6%; top:74.4%; width:82.5%; height:23.6%;"}]{.frame}
+```
+
 `.eyebrow`, `.next`, `.kicker`, `.speaker`, and `.foot` **must** be fenced divs
 rather than spans — each depends on being a direct flex child, and pandoc wraps
 a bare span in a `<p>` that would become the flex child instead. Everything

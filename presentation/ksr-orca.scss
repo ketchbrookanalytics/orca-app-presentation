@@ -1098,3 +1098,102 @@ $code-color: $navy !default;
 
 // Overview / print: keep the section grounds visible.
 .reveal.overview .slides > section { border: 1px solid $navy-mid; }
+
+// The four "what is ORCA" walkthrough slides are the product demo: the
+// screenshot should read from the back of the room, so it takes the full
+// height of the slide in a wide right-hand column, with the step label and
+// headline stacked in a narrow column beside it. The slides carry no `##`
+// title for that reason — the headline lives inside the left column.
+$shot-pad-x: 64px;
+$shot-pad-y: 48px;
+$shot-col:  480px;   // the headline column
+$shot-gap:   56px;
+
+.reveal .slides > section.shot { padding: $shot-pad-y $shot-pad-x; }
+
+.reveal .shot .split {
+  grid-template-columns: $shot-col 1fr;
+  gap: $shot-gap;
+}
+
+.reveal .shot .split > .col { position: relative; }
+
+.reveal .shot .headline { font-size: 44px; }
+
+.reveal .shot .kicker { margin-top: 32px; }
+
+// A percentage height on a flex/grid child is unreliable, but an absolutely
+// positioned one always resolves against its parent's used box. `inset: 0` plus
+// `margin: auto` centres it, and the fit-content sizing shrink-wraps the box to
+// the image — which is what lets `.hl` overlays be positioned in percentages of
+// the screenshot itself. The frame's border and fill are dropped here: the shot
+// is the slide.
+.reveal .shot .frame {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  background: none;
+  border: 0;
+}
+
+// The image caps against the shot column's own box in px rather than in
+// percentages: its parent is shrink-wrapped to the image, so a percentage here
+// would have nothing to resolve against.
+.reveal .shot .frame img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: $slide-w - 2 * $shot-pad-x - $shot-col - $shot-gap;
+  max-height: $slide-h - 2 * $shot-pad-y;
+}
+
+// --- screenshot annotations -------------------------------------------------
+// `.hl` rings a region of the screenshot; its `data-label` prints as a chip
+// above the ring. Both are positioned in percentages of the image, so they hold
+// as the shot scales. Written as an empty span inside the `.frame` span:
+//   []{.hl data-label="Cost estimate" style="left:11%; top:62%; ..."}
+.reveal .hl {
+  position: absolute;
+  box-sizing: border-box;
+  border: 2px solid $blue-light;
+  border-radius: 6px;
+  background-color: rgba(151, 198, 242, 0.1);
+  pointer-events: none;
+}
+
+.reveal .hl[data-label]::after {
+  content: attr(data-label);
+  position: absolute;
+  left: -2px;
+  bottom: 100%;
+  margin-bottom: 6px;
+  padding: 3px 12px;
+  border-radius: 4px;
+  border: 1px solid $blue-light;
+  background-color: $white;
+  color: $slate;
+  font-family: $font-family-sans-serif;
+  font-size: $fs-micro;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+// Chip placement, so a label never lands on top of the app's own text.
+// `.below` drops it under the ring; `.chip-right` aligns it to the ring's
+// right edge instead of its left.
+.reveal .hl.below[data-label]::after { bottom: auto; top: 100%; margin: 6px 0 0; }
+.reveal .hl.chip-right[data-label]::after { left: auto; right: -2px; }
+
+// The annotations are reveal fragments: they fade in on a keypress, after the
+// audience has had the screenshot to itself. Every `.hl` on a slide carries the
+// same `data-fragment-index`, so one press brings all of them up together.
+// Reveal's own fragment CSS does the fading; the ring and its chip share an
+// opacity because the chip is a pseudo-element of the ring.
+.reveal .hl.fragment { transition: opacity 500ms ease-out; }
+
+.reveal .shot .bullets { margin-top: 28px; }
+.reveal .shot .bullets li { margin-bottom: 18px; }

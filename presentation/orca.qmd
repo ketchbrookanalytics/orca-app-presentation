@@ -72,10 +72,12 @@ LET'S START HERE
 
 ::: notes
 **Keaton**:
-
-[hold for the laugh]
-
-Everyone in this room has been on a team like this — from group projects in school, to cross-functional committees at companies we work for, and even for business-consultant partnerships developing code and software. The work might not be evenly distributed, some people may be engaged more than others, and power dynamics or seniority might affect who actually gets credit at the end.
+- group projects in school,
+- to cross-functional committees at companies we work for
+- business-consultant partnerships developing code and software.
+- The work might not be evenly distributed
+- some people may be engaged more than others
+- power dynamics or seniority might affect who actually gets credit at the end.
 :::
 
 ## {.cream}
@@ -95,15 +97,11 @@ BUT IT DOESN'T HAVE TO BE
 
 ::: notes
 **Keaton**:
-
-...But it doesn't have to go that way. The collaboration that we're presenting on today is one that truly *worked* — two companies, two codebases, one app, and we still like each other. And the best part?  We're going to let you in on the secrets behind how we did it.
+The collaboration that we're presenting on today is one that truly *worked* — two companies, one app, and we still like each other.
 
 **Michael**:
-
-By a show of hands, how many folks in the room typically work as a lone wolf solo data scientist at their day job?  [Wait for hands to raise]
-
-And how many work on teams of more than one data scientist?  [Wait for hands to raise]
-
+By a show of hands, how many folks in the room typically work as a lone wolf solo data scientist at their day job?
+And how many work on teams of more than one data scientist?
 And how many hate voting in polls?  [Wait for hands to raise / laughs]
 :::
 
@@ -128,20 +126,32 @@ In just a moment, Keaton is going to talk about "open-end survey coding". But wh
 
 **Keaton**:
 
-As you might imagine, open-end survey coding is traditionally a slow and manual process, where a human is looking at a paragraph of text and deciding which category it belongs to. Beyond the manual nature of that work, it can also be *inconsistent* at scale. The team at KS&R had a hypothesis that AI could accelerate this task — but we knew that internal stakeholders and clients would not accept a "black box" doing this work.
+- slow and manual process, lots of human time.
+- also be *inconsistent* at scale.
+- The team at KS&R had a hypothesis that AI could accelerate this task — but we knew that internal stakeholders and clients would not accept a "black box" doing this work.
 :::
 
-<!-- TODO // In general, I think the notes for these next for slides have to be much more detailed to explain what the app does to users unfamiliar with open-ended survey response coding. -->
 
-## Upload data {.paper}
+## {.paper .shot}
 
+::::: {.split .fill}
+:::: col
 ::: {.eyebrow}
 WHAT IS ORCA — STEP 1 OF 4
 :::
 
-:::: {.fill .mt-md style="display:flex; align-items:center; justify-content:center;"}
-[![](images/orca-01-upload-data.png)]{.frame style="width:725px;"}
+[Upload data]{.headline}
+
+::: bullets
+- Point ORCA at the **column of open-end responses**, plus a unique ID column
+- Optionally **filter the rows** first, so a run covers only the cut you care about
+:::
 ::::
+
+:::: col
+[![](images/orca-01-upload-data.png)[]{.hl .fragment data-fragment-index="1" data-label="Pick columns, filter rows" style="left:8.6%; top:74.4%; width:82.5%; height:23.6%;"}]{.frame}
+::::
+:::::
 
 ::: notes
 **Keaton**:
@@ -149,49 +159,84 @@ WHAT IS ORCA — STEP 1 OF 4
 We're going to work a bit backwards today and first show you what the final solution looked like.
 
 Step one — the researcher uploads the open-end response data.
+- Multiple file types are supported, and the researcher can pick which columns to use and optionally filter the rows so a run covers only the cut they care about.
 :::
 
-## Define codes {.paper}
+## {.paper .shot}
 
+::::: {.split .fill}
+:::: col
 ::: {.eyebrow}
 WHAT IS ORCA — STEP 2 OF 4
 :::
 
-:::: {.fill .mt-md style="display:flex; align-items:center; justify-content:center;"}
-[![](images/orca-02-define-codes.png)]{.frame style="width:790px;"}
+[Define categories and set parameters]{.headline}
+
+::: bullets
+- Start from a **pre-built template** — a codeframe a researcher already has
+- Or **build it in the app**, adding and editing categories one at a time
+:::
 ::::
 
+:::: col
+[![](images/orca-02-define-codes.png)[]{.hl .fragment data-fragment-index="1" .chip-right data-label="Upload a template" style="left:17.5%; top:10.8%; width:65.0%; height:26.6%;"}[]{.hl .fragment data-fragment-index="1" data-label="Or build it interactively" style="left:2.2%; top:40.2%; width:95.6%; height:48.0%;"}]{.frame}
+::::
+:::::
+
 ::: notes
-Keaton: step two — they define the codeframe the AI will code against.
+Keaton: step two — they define the codeframe (set of categories) the AI will code against.
+- also set parameters for the run, like context, multi-code scenarios, and others
+
 :::
 
-## Review &amp; initiate {.paper}
+## {.paper .shot}
 
+::::: {.split .fill}
+:::: col
 ::: {.eyebrow}
 WHAT IS ORCA — STEP 3 OF 4
 :::
 
-:::: {.fill .mt-md style="display:flex; align-items:center; justify-content:center;"}
-[![](images/orca-03-review-initiate.png)]{.frame style="width:825px;"}
+[Review &amp; initiate]{.headline}
+
+::: bullets
+- Every run is **tagged to a person and a project**, and lands at a known path
+- Researchers are **emailed** when a run starts and when it finishes
+- The **estimated cost** is on screen before anyone can hit go
+:::
 ::::
+
+:::: col
+[![](images/orca-03-review-initiate.png)[]{.hl .fragment data-fragment-index="1" .chip-right data-label="Who to notify" style="left:10.4%; top:16.7%; width:32.0%; height:42.8%;"}[]{.hl .fragment data-fragment-index="1" data-label="Which run, where it lands" style="left:44.2%; top:16.7%; width:45.8%; height:20.0%;"}[]{.hl .fragment data-fragment-index="1" data-label="What it will cost" style="left:10.4%; top:62.0%; width:32.0%; height:34.3%;"}]{.frame}
+::::
+:::::
 
 ::: notes
 Keaton: step three — review the setup and kick off the job.
+- Logging
+- Automated email notifications
+- Cost estimation (big!)
 :::
 
-## Track &amp; pick up {.paper}
+## {.paper .shot}
 
+::::: {.split .fill}
+:::: col
 ::: {.eyebrow}
 WHAT IS ORCA — STEP 4 OF 4
 :::
 
-:::: {.fill .mt-md style="display:flex; align-items:center; justify-content:center;"}
-[![](images/orca-04-job-status.png)]{.frame style="width:725px;"}
-::::
+[Track &amp; pick up]{.headline}
 
 ::: {.kicker}
 This is now how KS&R's researchers code **thousands** of open-end responses.
 :::
+::::
+
+:::: col
+[![](images/orca-04-job-status.png)]{.frame}
+::::
+:::::
 
 ::: notes
 Keaton: step four — track the job and pick the results back up when it's done.
@@ -206,11 +251,9 @@ The proof is in the pudding: ORCA is now how KS&R's researchers code thousands o
 [A front-end team and a back-end team, at **two different companies**, who had to depend on each other to ship anything at all — and built the collaboration that made that dependency work.]{.lede}
 
 ::: notes
-Keaton: you've now seen the problem and the thing we shipped. Here's the part that isn't on the screen: this was built by a front-end team and a back-end team at two different companies, who had to depend on each other to ship anything at all. The rest of the talk fills in that middle.
-
-~~Feedback: We're giving too much info here — we're diving into the talk too quickly here; let's do a little less of the collaboration setup.~~ (addressed: setup trimmed to the two meme slides, the "three ways" slide parked at the bottom of this file)
-
-~~Start the story w/ the bookends: it started w/ a problem, ended with a solution, and *then* we'll fill in the middle after that.~~ (addressed: problem → demo → this turn slide)
+*Keaton*
+- you've now seen the problem and the thing we shipped.
+- But harkening back to our first slide, how did we we actually make this collaboration work?
 :::
 
 ## One system, two companies {.cream}
@@ -248,6 +291,7 @@ Why not in-house? A one-developer team, several competing priorities, and a lift
 :::
 
 ::: notes
+*Michael*
 The work to build this solution was very explicitly divided: KS&R owned the back-end, server-side code, and the front-end user interface was Ketchbrook's responsibility.
 
 Maybe this sounds scary, but there are some obvious benefits to this:
@@ -265,9 +309,8 @@ KS&R found that the front-end/back-end delegation led to lower institutional and
 
 And from our perspective, we *prefer* to not have to hold on to our clients' API keys or sensitive data so that we don't have to deal with the responsibility of securing that -- the best security posture is having nothing sensitive to secure in the first place.
 
-Keaton: ORCA is a collaboration talk, not just a tech talk. KS&R (research firm, backend/infra owner) and Ketchbrook Analytics (consultancy, front-end/UX owner) designed and built this together, across a company boundary, as part of KS&R's DS&I project-teams model.
-
-Keaton, the why: at that point DS&I was a small team — one developer. The work was real and the timeline mattered, and we were balancing it against several other priorities. Partnering wasn't about missing skills; it was speed and capacity. We could either build ORCA slowly and serially, or bring in a partner and build it in parallel.
+*Keaton*
+- One developer call out. We weren't missing skills in-house, but we were missing bandwidth. The team at KS&R was already stretched across several competing priorities, and this lift needed to happen *now*.
 
 ~~Feedback: Have Keaton talk about *why* KS&R sought out an external collaborator as opposed to just doing it themselves in-house.~~ (addressed)
 :::
