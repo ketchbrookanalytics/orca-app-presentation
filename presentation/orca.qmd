@@ -39,6 +39,11 @@ POSIT::CONF(2026)
 ::::
 :::::
 
+::: footer-logos
+![](images/ksr-logo.png){.logo-xs}
+![](images/ketchbrook-wordmark.png){.logo-sm}
+:::
+
 ::: notes
 **Keaton**:
 
@@ -112,12 +117,6 @@ WHY ORCA EXISTS
 :::
 
 [AI can accelerate the work of categorizing thousands of free-text answers. But for a research firm's internal stakeholders and clients, speed means nothing without trust in the result.]{.lede .mt-md}
-
-::: {.chips .mt-lg}
-[Transparency]{.chip}
-[Trust]{.chip}
-[Reproducibility]{.chip}
-:::
 
 ::: notes
 **Michael**:
@@ -266,7 +265,7 @@ A CROSS-COMPANY BUILD
 
 ::::: {.versus .fill .mt-md}
 :::: {.card .centered}
-![](images/ksr-logo.png){.logo-xl}
+![](images/ksr-logo-dark.png){.logo-xl}
 
 ::: foot
 [Research firm — backend & infrastructure owner]{.cap}
@@ -352,12 +351,8 @@ TWO LENSES ON ONE BUILD
 The throughline: at every stage, a front-end decision made the back-end's job **harder or easier** — and vice versa.
 :::
 
-::: {.next}
-Next — Michael, on designing together before writing code →
-:::
-
 ::: notes
-Keaton: two lenses on what follows — Michael on the Shiny front end (job submission, response review, interactive code editing), me on the Posit-based back end (plumber, pins, scheduled Quarto workflows) — all of it deployed on Posit Connect. Over to Michael.
+Keaton: two lenses on what follows — Michael on the Shiny front end (job submission, response review, interactive code editing), me on the Posit-based back end (plumber, pins, scheduled Quarto workflows) — all of it deployed on Posit Connect.
 :::
 
 ## A stable seam between two codebases {.cream}
@@ -429,10 +424,6 @@ Don't dwell on the greyed pieces — just name them so the shape is on screen: O
 
 ::: {.eyebrow}
 CHAPTER 1
-:::
-
-::: {.speaker}
-Michael
 :::
 
 ::: hrule
@@ -550,10 +541,6 @@ You may not catch *everything* here -- smaller things may come up as you actuall
 CHAPTER 2
 :::
 
-::: {.speaker}
-Michael
-:::
-
 ::: hrule
 :::
 
@@ -609,10 +596,6 @@ TAKEAWAY — WHILE YOU BUILD
 - If a decision only exists in a call or a DM, it doesn't exist. Put it where the other company can find it without asking you.
 :::
 
-::: {.next .mt-lg}
-Next — Keaton, on earning trust in production →
-:::
-
 ::: notes
 Michael, active takeaway for chapter 2: over-document across the boundary. The written trail is what let us work in parallel without blocking each other — and it's the habit that transfers to any partner team. Over to Keaton for chapter 3.
 :::
@@ -654,10 +637,6 @@ Michael: a UX need — live job status, inline editing of AI output — drove a 
 
 ::: {.eyebrow}
 CHAPTER 3
-:::
-
-::: {.speaker}
-Keaton
 :::
 
 ::: hrule
@@ -743,10 +722,6 @@ WHAT MADE PARALLEL WORK POSSIBLE
 Four independently deployable pieces, each with one job — the same separation of concerns that let two companies build without blocking each other.
 :::
 
-::: {.kicker}
-Blythe's test: would we have designed it this way even if it weren't an AI app? Yes — which is exactly the point.
-:::
-
 ::: notes
 Keaton: modularizing the backend independently from the front end is what made the parallel, non-blocking collaboration possible. Four pieces, each with one job.
 
@@ -768,10 +743,6 @@ TAKEAWAY — AFTER YOU SHIP
 ::: {.bullets .lg .mt-lg}
 - Pick the boundary between the two teams **deliberately**, then make it something both sides can build against without waiting — an API, a versioned artifact, a pinned dataset.
 - A good seam means either side can be replaced, rewritten, or handed to someone new without renegotiating the whole system. That's what makes the collaboration outlast the project.
-:::
-
-::: {.next .mt-lg}
-Next — Michael, closing us out →
 :::
 
 ::: notes
@@ -821,9 +792,7 @@ Michael: if you're building Shiny apps with a partner team — agency/client, re
 [On ORCA: the back-end pipelines]{.hat}
 [AI Engineer — CHG Healthcare]{.role}
 
-::: {.qr .placeholder}
-LinkedIn QR
-:::
+![](images/qrcode_keaton.png){.qr}
 ::::
 :::: person
 ![](images/michael-headshot.png){.headshot-lg}
@@ -832,9 +801,7 @@ LinkedIn QR
 [Ketchbrook Analytics — Chief Data Scientist]{.role}
 [On ORCA: the interface]{.hat}
 
-::: {.qr .placeholder}
-LinkedIn QR
-:::
+![](images/qrcode_michael.png){.qr}
 ::::
 :::::
 
