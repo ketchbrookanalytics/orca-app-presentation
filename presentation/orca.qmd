@@ -488,10 +488,6 @@ I'm sure you've heard this before from Maya Gans or any of the other wonderfully
 
 ## One workflow, two contracts {.cream}
 
-::: {.eyebrow}
-THE KEY MOVE
-:::
-
 :::: {.split .split-even .fill .mt-md}
 ::: col
 [![](images/orca-02-define-codes.png)]{.frame .crop style="height:697px;"}
@@ -524,34 +520,38 @@ These contracts also helped us "defensively program" against anything that would
 The big picture here -- neither KS&R nor Ketchbrook were ever guessing at or assuming the other's needs.
 :::
 
-## Tips for a successful Design phase {.paper}
-
-::: {.eyebrow}
-TAKEAWAY — BEFORE YOU BUILD
-:::
+## Recap: Tips for a successful Design phase {.paper}
 
 ::: {.bullets .lg .mt-lg}
-- Before your next cross-team project starts, get both sides in front of **one shared visual artifact** — Mural, Excalidraw, a whiteboard photo. Not a spec document.
+- So before your next cross-team project starts, get both sides in front of **one shared visual artifact** — Mural, Excalidraw, a whiteboard photo. Not a spec document.
 - Argue about it there, while changing it costs nothing. Every disagreement you surface on the wireframe is one you don't discover in a pull request three weeks later.
 :::
 
 ::: notes
-Michael, active takeaway for chapter 1: the thing to actually do on Monday is get a shared visual artifact in front of both teams before anyone opens an editor. Cheap to change, and it forces the disagreements out early.
+**Michael**
+
+- < Recap our first tip using the slide notes >
 
 You may not catch *everything* here -- smaller things may come up as you actually go from 2D static design document to a living, breathing app... **but** this will help expedite so many of those future nitpicks and the major concepts will be agreed upon up front.
 :::
 
-## Building in parallel, without blocking each other {.navy .chapter}
+## Build in parallel, without blocking each other {.navy .chapter}
 
 ::: {.eyebrow}
-CHAPTER 2
+COLLABORATION SUCCESS TIP #2
 :::
 
 ::: hrule
 :::
 
 ::: notes
-Michael continues into chapter 2.
+**Michael**:
+
+Now let's get to our *second* tip for successful data science collaboration... parallel development without bumping into your coworkers during the process
+
+Communication can be tricky when you're collaborating across different organizations like we were. Communicating within Microsoft Teams or Slack might not always be possible depending on your IT teams' posture/infrastructure/security. And email is an extremely inefficient way to program together.
+
+We needed a communication vehicle that would allow us to not only check in with each other and provide project status updates, but could also serve as a task-oriented tool that would hold us both accountable and provide a single source of truth.
 :::
 
 ## Issues and PRs as the shared source of truth {.paper}
@@ -570,16 +570,14 @@ WORKING ASYNC, ACROSS COMPANIES
 ::::
 
 ::: notes
-**Michael**:
+**Michael**
 
-Communication can be tricky when you're collaborating across different organizations like we were. Communicating within Microsoft Teams or Slack might not always be possible depending on your IT teams' posture/infrastructure/security. And email is an extremely inefficient way to program together.
+... and GitHub Branches, Issues and PRs fit that mold perfectly, allowing us to see each other's progress and work asynchronously without impeding one another.
 
-We needed a communication vehicle that would allow us to not only check in with each other and provide project status updates, but could also serve as a task-oriented tool that would hold us both accountable and provide a single source of truth. GitHub Branches, Issues and PRs fit that mold perfectly, allowing us to see each other's progress and work asynchronously without impeding one another.
+- More specifically, GitHub Issues allowed us to memorialize, triage, discuss and prioritize the work
+- Branches allowed us to work on those issues asynchronously without worrying that we would overwrite someone else's work
+- PRs allowed us to get our proposed enhancements, updates, fixes, and revisions in front of each other -- and allowing for back-and-forth discussion -- before committing to them hitting the final deliverable  
 :::
-
-## Not an assertion — **receipts.** {.navy .statement}
-
-[Issues, PRs, and a contract everyone could point to — that's why this collaboration held together.]{.lede}
 
 ## Make the issue the interface {.paper}
 
@@ -593,7 +591,7 @@ TAKEAWAY — WHILE YOU BUILD
 :::
 
 ::: notes
-TBD
+
 :::
 
 ## UX needs and backend constraints, both ways {.paper}
