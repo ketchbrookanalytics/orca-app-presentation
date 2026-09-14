@@ -100,9 +100,9 @@ BUT IT DOESN'T HAVE TO BE
 The collaboration that we're presenting on today is one that truly *worked* — two companies, one app, and we still like each other.
 
 **Michael**:
-By a show of hands, how many folks in the room typically work as a lone wolf solo data scientist at their day job?
-And how many work on teams of more than one data scientist?
-And how many hate voting in polls?  [Wait for hands to raise / laughs]
+- By a show of hands, how many work on teams of more than one data scientist?
+- And how many folks in the room typically work as a lone wolf solo data scientist at their day job?
+- And how many hate voting in polls?  [Wait for hands to raise / laughs]
 :::
 
 ## Categorizing open-end survey responses is slow, manual, and inconsistent at scale {.paper}
@@ -301,7 +301,7 @@ Maybe this sounds scary, but there are some obvious benefits to this:
 - Diversity of thought: the best ideas will prevail (as opposed to only one person's idea)
 - Specialization: no one individual person has to be a jack-of-all-trades — people can focus on what they're best at
 
-In our case, there were even some other additional benefits:
+~~In our case, there were even some other additional benefits:~~
 
 Here's how we rationalized dividing up the work in this particular case. We're not necessarily advocating for this exact delegation strategy -- you may find in your own projects that separating the work between multiple parties works better by delegating different pages of an app to different developers, adopting our front end vs. back end strategy, or something totally different. Just make sure the split it is *well-defined*.
 
@@ -420,7 +420,8 @@ The UI iterated against a stable API surface while the heavier logic behind it k
 :::
 
 ::: notes
-Michael: the architecture that made this possible. Focus on the top row: a golem-based Shiny app decoupled from a plumber API for async job processing, so the UI could be built and iterated against a stable API surface while the heavier AI/coding logic evolved behind it. ORCAstra is what actually talks to the OpenAI batch API — the front end never holds a key.
+**Keaton**:
+The architecture that made this possible. Focus on the top row: a golem-based Shiny app decoupled from a plumber API for async job processing, so the UI could be built and iterated against a stable API surface while the heavier AI/coding logic evolved behind it. ORCAstra is what actually talks to the OpenAI batch API — the front end never holds a key.
 
 Don't dwell on the greyed pieces — just name them so the shape is on screen: ORCAdb is a pins board on Connect holding batch metadata and run history; ORCAwatch is a scheduled Quarto document that polls ORCAstra for finished jobs, reads and updates that pin, and writes the cleaned files out to the network share, then emails the submitter once delivery is complete. We come back to both in chapter 3.
 :::
@@ -594,10 +595,6 @@ We needed a communication vehicle that would allow us to not only check in with 
 
 [Issues, PRs, and a contract everyone could point to — that's why this collaboration held together.]{.lede}
 
-::: notes
-Michael: this answers Keaton's opening question directly — why did this collaboration succeed — with receipts, not just an assertion. Over to Keaton for chapter 3.
-:::
-
 ## Make the issue the interface {.paper}
 
 ::: {.eyebrow}
@@ -614,7 +611,11 @@ Next — Keaton, on earning trust in production →
 :::
 
 ::: notes
-Michael, active takeaway for chapter 2: over-document across the boundary. The written trail is what let us work in parallel without blocking each other — and it's the habit that transfers to any partner team. Over to Keaton for chapter 3.
+Michael, active takeaway for chapter 2: over-document across the boundary. The written trail is what let us work in parallel without blocking each other — and it's the habit that transfers to any partner team. 
+
+< clean these up >
+
+Over to Keaton for chapter 3.
 :::
 
 ## UX needs and backend constraints, both ways {.paper}
@@ -785,6 +786,8 @@ THE REAL PRODUCT
 :::
 
 ::: notes
+Through rigorous wireframing, providing style guides up front, using issues/branches/PRs to strongly document, delegate, and isolate your work 
+
 Michael: the real product wasn't just ORCA — it was a repeatable model for cross-company, cross-discipline collaboration on the Posit stack.
 :::
 
