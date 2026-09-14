@@ -949,6 +949,10 @@ $code-color: $navy !default;
   max-width: 1560px;
 }
 
+// The title slide carries `.footer-logos` too, pinned 60px off the bottom, so
+// the byline has to stop short of them rather than running to the slide margin.
+.reveal .title-slide-custom .byline { margin-bottom: 96px; }
+
 .reveal .byline {
   display: grid;
   grid-template-columns: 1fr 1px 1fr;
@@ -1053,22 +1057,12 @@ $code-color: $navy !default;
   height: 190px;
   margin-top: auto;
   padding-top: 0;
-  background-color: $white;
+  // The codes are white modules on transparency, so the navy ground shows
+  // through and doubles as the quiet zone -- no white card behind them.
 }
 
-// Stands in until the real LinkedIn URLs are encoded; deliberately not
-// scannable, so a wrong code never goes up on stage.
-.reveal .qr.placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: 2px dashed $navy-mid;
-  font-size: $fs-small;
-  color: $blue-muted;
-}
-
-.reveal .closing .footer-logos {
+// Shared by the title slide and the closing slide.
+.reveal .footer-logos {
   position: absolute;
   left: $margin-x;
   right: $margin-x;

@@ -39,20 +39,13 @@ POSIT::CONF(2026)
 ::::
 :::::
 
+::: footer-logos
+![](images/ksr-logo.png){.logo-xs}
+![](images/ketchbrook-wordmark.png){.logo-sm}
+:::
+
 ::: notes
-**Keaton**:
-
-[welcome, introduce the talk and both presenters].
-
-**Both**:
-
-- [Share the function of what we do]
-- [Share the people that we help]
-- [Share the impact of that work]
-
-**Michael**:
-
-While we're going to showcase a particular Shiny app in this presentation, this talk is really about *collaboration*.
+Keaton first, intro, then Michael, then back to Keaton. 
 :::
 
 ## {.cream}
@@ -62,10 +55,6 @@ While we're going to showcase a particular Shiny app in this presentation, this 
 ![](images/collaboration-meme.jpg){width="880"}
 :::
 ::: col
-::: {.eyebrow}
-LET'S START HERE
-:::
-
 [We've all been on this team.]{.headline}
 :::
 ::::
@@ -80,29 +69,95 @@ LET'S START HERE
 - power dynamics or seniority might affect who actually gets credit at the end.
 :::
 
-## {.cream}
+## Team data science can be hard {.cream}
 
-:::: {.split .split-even .v-center .fill}
-::: col
-![](images/elaine-dancing-laughing-pd3cj0iqjamwfo13.gif){width="880"}
-:::
-::: col
-::: {.eyebrow}
-BUT IT DOESN'T HAVE TO BE
-:::
+::::: {.cols-4 .fill .mt-md}
+:::: {.card .centered .fragment}
+[01]{.num}
 
-[This one actually worked.]{.headline}
-:::
+[Everyone has different skillsets and strengths]{.sub}
 ::::
+:::: {.card .centered .fragment}
+[02]{.num}
+
+[Design expectations may vary]{.sub}
+::::
+:::: {.card .centered .fragment}
+[03]{.num}
+
+[Communication channels can be inefficient]{.sub}
+::::
+:::: {.card .centered .fragment}
+[04]{.num}
+
+[Shared progress is difficult to track]{.sub}
+::::
+:::::
 
 ::: notes
+**Michael**
+And in data science it's no different. There are a bunch of things that make collaboration difficult, including...
+
+- the difference in strengths and weaknesses that each team member has
+- in the case of a Shiny app, people might have totally different design ideas in their head of what the app should look like
+- your typical "business" communication channels (email, or perhaps somehow worse -- Microsoft Teams) aren't great for collaborating around code
+- one person may be progressing on one part of the project while another may be working on another part, and those two parts may affect each other -- if you don't know where each other is at in your progress, it might be hard to plan or provide accurate timelines to leadership
+
 **Keaton**:
 The collaboration that we're presenting on today is one that truly *worked* — two companies, one app, and we still like each other.
 
 **Michael**:
-By a show of hands, how many folks in the room typically work as a lone wolf solo data scientist at their day job?
-And how many work on teams of more than one data scientist?
-And how many hate voting in polls?  [Wait for hands to raise / laughs]
+- By a show of hands, how many folks in the room work on teams of more than one data scientist at your day job?
+- And how many typically work as a lone wolf solo data scientist?
+- And how many hate voting in polls?
+:::
+
+## One Shiny app, built by two companies {.cream}
+
+::::: {.versus .fill .mt-md}
+:::: {.card .centered}
+![](images/ksr-logo-dark.png){.logo-xl}
+
+::: foot
+[Research firm — backend & infrastructure owner]{.cap}
+:::
+::::
+::: glyph
+\+
+:::
+:::: {.card .centered}
+![](images/ketchbrook-mark.png){.logo-lg}
+
+![](images/ketchbrook-wordmark.png){.logo-md}
+
+::: foot
+[Consultancy — front-end & UX owner]{.cap}
+:::
+::::
+:::::
+
+::: notes
+*Michael*
+So when Keaton called me up and said "Hey Michael, we could use your team's help on a really exciting Shiny app project at KS&R. But I'm not used to working with someone else on these types of projects, especially not someone outside of my organization. How are we going to make this collaboration work?" -- we had to figure out the technical and non-technical tools that we were going to employ to pull this off.
+
+The work to build this solution was very explicitly divided: KS&R owned the back-end, server-side code, and the front-end user interface was Ketchbrook's responsibility.
+
+Maybe this sounds scary, but there are some obvious benefits to this:
+
+- Speed: if you can truly work in parallel, obviously two people working simultaneously will get the job done faster than one
+- Error catching: more eyes on the code is more likely to catch issues
+- Diversity of thought: the best ideas will prevail (as opposed to only one person's idea)
+- Specialization: no one individual person has to be a jack-of-all-trades — people can focus on what they're best at
+
+That's how we rationalized dividing up the work in this particular case. We're not necessarily advocating for this exact delegation strategy -- you may find in your own projects that separating the work between multiple parties works better by delegating different pages of an app to different developers, adopting our front end vs. back end strategy, or something totally different. Just make sure the split it is *well-defined*.
+
+KS&R found that the front-end/back-end delegation led to lower institutional and financial risk for an external partner -- like Ketchbrook -- to touch the AI-spend involved.
+
+And from our perspective, we *prefer* to not have to hold on to our clients' API keys or sensitive data so that we don't have to deal with the responsibility of securing that -- the best security posture is having nothing sensitive to secure in the first place.
+
+*Keaton*
+- One developer call out. We weren't missing skills in-house, but we were missing bandwidth. The team at KS&R was already stretched across several competing priorities, and this lift needed to happen *now*.
+
 :::
 
 ## Categorizing open-end survey responses is slow, manual, and inconsistent at scale {.paper}
@@ -112,12 +167,6 @@ WHY ORCA EXISTS
 :::
 
 [AI can accelerate the work of categorizing thousands of free-text answers. But for a research firm's internal stakeholders and clients, speed means nothing without trust in the result.]{.lede .mt-md}
-
-::: {.chips .mt-lg}
-[Transparency]{.chip}
-[Trust]{.chip}
-[Reproducibility]{.chip}
-:::
 
 ::: notes
 **Michael**:
@@ -256,65 +305,6 @@ The proof is in the pudding: ORCA is now how KS&R's researchers code thousands o
 - But harkening back to our first slide, how did we we actually make this collaboration work?
 :::
 
-## One system, two companies {.cream}
-
-::: {.eyebrow}
-A CROSS-COMPANY BUILD
-:::
-
-[Built as one of KS&R's DS&I project teams — a research firm and an external consultancy, one shared build.]{.cap .mt-sm}
-
-::::: {.versus .fill .mt-md}
-:::: {.card .centered}
-![](images/ksr-logo.png){.logo-xl}
-
-::: foot
-[Research firm — backend & infrastructure owner]{.cap}
-:::
-::::
-::: glyph
-\+
-:::
-:::: {.card .centered}
-![](images/ketchbrook-mark.png){.logo-lg}
-
-![](images/ketchbrook-wordmark.png){.logo-md}
-
-::: foot
-[Consultancy — front-end & UX owner]{.cap}
-:::
-::::
-:::::
-
-::: {.kicker}
-Why not in-house? A one-developer team, several competing priorities, and a lift that needed to happen **now**.
-:::
-
-::: notes
-*Michael*
-The work to build this solution was very explicitly divided: KS&R owned the back-end, server-side code, and the front-end user interface was Ketchbrook's responsibility.
-
-Maybe this sounds scary, but there are some obvious benefits to this:
-
-- Speed: if you can truly work in parallel, obviously two people working simultaneously will get the job done faster than one
-- Error catching: more eyes on the code is more likely to catch issues
-- Diversity of thought: the best ideas will prevail (as opposed to only one person's idea)
-- Specialization: no one individual person has to be a jack-of-all-trades — people can focus on what they're best at
-
-In our case, there were even some other additional benefits:
-
-Here's how we rationalized dividing up the work in this particular case. We're not necessarily advocating for this exact delegation strategy -- you may find in your own projects that separating the work between multiple parties works better by delegating different pages of an app to different developers, adopting our front end vs. back end strategy, or something totally different. Just make sure the split it is *well-defined*.
-
-KS&R found that the front-end/back-end delegation led to lower institutional and financial risk for an external partner -- like Ketchbrook -- to touch the AI-spend involved.
-
-And from our perspective, we *prefer* to not have to hold on to our clients' API keys or sensitive data so that we don't have to deal with the responsibility of securing that -- the best security posture is having nothing sensitive to secure in the first place.
-
-*Keaton*
-- One developer call out. We weren't missing skills in-house, but we were missing bandwidth. The team at KS&R was already stretched across several competing priorities, and this lift needed to happen *now*.
-
-~~Feedback: Have Keaton talk about *why* KS&R sought out an external collaborator as opposed to just doing it themselves in-house.~~ (addressed)
-:::
-
 ## {.navy}
 
 ::: {.eyebrow}
@@ -352,12 +342,8 @@ TWO LENSES ON ONE BUILD
 The throughline: at every stage, a front-end decision made the back-end's job **harder or easier** — and vice versa.
 :::
 
-::: {.next}
-Next — Michael, on designing together before writing code →
-:::
-
 ::: notes
-Keaton: two lenses on what follows — Michael on the Shiny front end (job submission, response review, interactive code editing), me on the Posit-based back end (plumber, pins, scheduled Quarto workflows) — all of it deployed on Posit Connect. Over to Michael.
+Keaton: two lenses on what follows — Michael on the Shiny front end (job submission, response review, interactive code editing), me on the Posit-based back end (plumber, pins, scheduled Quarto workflows) — all of it deployed on Posit Connect.
 :::
 
 ## A stable seam between two codebases {.cream}
@@ -420,7 +406,8 @@ The UI iterated against a stable API surface while the heavier logic behind it k
 :::
 
 ::: notes
-Michael: the architecture that made this possible. Focus on the top row: a golem-based Shiny app decoupled from a plumber API for async job processing, so the UI could be built and iterated against a stable API surface while the heavier AI/coding logic evolved behind it. ORCAstra is what actually talks to the OpenAI batch API — the front end never holds a key.
+**Keaton**:
+The architecture that made this possible. Focus on the top row: a golem-based Shiny app decoupled from a plumber API for async job processing, so the UI could be built and iterated against a stable API surface while the heavier AI/coding logic evolved behind it. ORCAstra is what actually talks to the OpenAI batch API — the front end never holds a key.
 
 Don't dwell on the greyed pieces — just name them so the shape is on screen: ORCAdb is a pins board on Connect holding batch metadata and run history; ORCAwatch is a scheduled Quarto document that polls ORCAstra for finished jobs, reads and updates that pin, and writes the cleaned files out to the network share, then emails the submitter once delivery is complete. We come back to both in chapter 3.
 :::
@@ -431,17 +418,7 @@ Don't dwell on the greyed pieces — just name them so the shape is on screen: O
 CHAPTER 1
 :::
 
-::: {.speaker}
-Michael
-:::
-
 ::: hrule
-:::
-
-::: chips
-[Mural]{.chip}
-[KS&R brand book]{.chip}
-[Design system & font files]{.chip}
 :::
 
 ::: notes
@@ -465,9 +442,9 @@ SHARED UNDERSTANDING, FIRST
 ::: notes
 [Ground the audience back to the app, as we're now talking about the design]
 
-~~Feedback: For each phase of the project (before, during, after), we need to have an *active takeaway* for the audience that reinforces the **collaboration**.~~ (addressed: one takeaway slide now closes each chapter — "Draw the contract before you build it", "Make the issue the interface", "Build a seam, not a handoff")
+**Michael**:
 
-Michael: shared understanding first. Wireframing sessions in Mural, where UI mockups and API/data shape were sketched in the same room before either side committed to an implementation.
+So let's get back to the app itself, and specifically the design process.  Building a shared understanding betweeen the two parties was the first critical step. We accomplished that through wireframing sessions in Mural, where UI mockups and API/data shape were sketched in the same room before either side committed to an implementation.
 :::
 
 ## The brand book as a forcing function {.paper}
@@ -524,7 +501,7 @@ Also having well-defined contracts of what the *outgoing* data should look like 
 
 These contracts also helped us "defensively program" against anything that would *break* that contract, and allow us to point users back in the right direction as opposed to giving them a "Server disconnected" error message and the app shutting down.
 
-The big picture here -- neither KS&R nor Ketchbrook were every guessing at or assuming the other's needs.
+The big picture here -- neither KS&R nor Ketchbrook were ever guessing at or assuming the other's needs.
 :::
 
 ## Tips for a successful Design phase {.paper}
@@ -550,17 +527,7 @@ You may not catch *everything* here -- smaller things may come up as you actuall
 CHAPTER 2
 :::
 
-::: {.speaker}
-Michael
-:::
-
 ::: hrule
-:::
-
-::: chips
-[GitHub Issues & PRs]{.chip}
-[[golem]{.pkg}]{.chip}
-[[plumber]{.pkg}]{.chip}
 :::
 
 ::: notes
@@ -594,10 +561,6 @@ We needed a communication vehicle that would allow us to not only check in with 
 
 [Issues, PRs, and a contract everyone could point to — that's why this collaboration held together.]{.lede}
 
-::: notes
-Michael: this answers Keaton's opening question directly — why did this collaboration succeed — with receipts, not just an assertion. Over to Keaton for chapter 3.
-:::
-
 ## Make the issue the interface {.paper}
 
 ::: {.eyebrow}
@@ -609,12 +572,8 @@ TAKEAWAY — WHILE YOU BUILD
 - If a decision only exists in a call or a DM, it doesn't exist. Put it where the other company can find it without asking you.
 :::
 
-::: {.next .mt-lg}
-Next — Keaton, on earning trust in production →
-:::
-
 ::: notes
-Michael, active takeaway for chapter 2: over-document across the boundary. The written trail is what let us work in parallel without blocking each other — and it's the habit that transfers to any partner team. Over to Keaton for chapter 3.
+TBD
 :::
 
 ## UX needs and backend constraints, both ways {.paper}
@@ -656,17 +615,7 @@ Michael: a UX need — live job status, inline editing of AI output — drove a 
 CHAPTER 3
 :::
 
-::: {.speaker}
-Keaton
-:::
-
 ::: hrule
-:::
-
-::: chips
-[[pins]{.pkg}]{.chip}
-[Posit Connect]{.chip}
-[Scheduled Quarto]{.chip}
 :::
 
 ::: notes
@@ -743,10 +692,6 @@ WHAT MADE PARALLEL WORK POSSIBLE
 Four independently deployable pieces, each with one job — the same separation of concerns that let two companies build without blocking each other.
 :::
 
-::: {.kicker}
-Blythe's test: would we have designed it this way even if it weren't an AI app? Yes — which is exactly the point.
-:::
-
 ::: notes
 Keaton: modularizing the backend independently from the front end is what made the parallel, non-blocking collaboration possible. Four pieces, each with one job.
 
@@ -770,10 +715,6 @@ TAKEAWAY — AFTER YOU SHIP
 - A good seam means either side can be replaced, rewritten, or handed to someone new without renegotiating the whole system. That's what makes the collaboration outlast the project.
 :::
 
-::: {.next .mt-lg}
-Next — Michael, closing us out →
-:::
-
 ::: notes
 Keaton, active takeaway for chapter 3: the architecture is what lets the collaboration survive. Choose the seam on purpose, make it stable, and both sides stay unblocked long after the initial build.
 :::
@@ -785,7 +726,11 @@ THE REAL PRODUCT
 :::
 
 ::: notes
-Michael: the real product wasn't just ORCA — it was a repeatable model for cross-company, cross-discipline collaboration on the Posit stack.
+**Michael**:
+
+Through rigorous wireframing, providing style guides up front, and using issues/branches/PRs to strongly document, delegate, and isolate your work, we were able to accomplish something pretty special.
+
+And the real product wasn't just the ORCA app — it was a repeatable model for cross-company, cross-discipline collaboration, deployed to the world via the Posit stack.
 :::
 
 ## Bring a design artifact to your next cross-team project — not just code {.paper}
@@ -810,6 +755,21 @@ An architecture — [golem]{.pkg} + [plumber]{.pkg} + [pins]{.pkg} — that lets
 Michael: if you're building Shiny apps with a partner team — agency/client, research/engineering, frontend/backend — invest early in shared visual contracts, issue-driven development, and an architecture that lets both sides move independently against a stable interface.
 :::
 
+## {.cream}
+
+:::: {.split .split-even .v-center .fill}
+::: col
+![](images/elaine-dancing-laughing-pd3cj0iqjamwfo13.gif){width="880"}
+:::
+::: col
+::: {.eyebrow}
+DATA SCIENCE COLLABORATION CAN BE HARD  
+:::
+
+[But when you get it right, it feels like this.]{.headline}
+:::
+::::
+
 ## Thank you {.navy .closing}
 
 ::::: {.people .mt-lg}
@@ -821,9 +781,7 @@ Michael: if you're building Shiny apps with a partner team — agency/client, re
 [On ORCA: the back-end pipelines]{.hat}
 [AI Engineer — CHG Healthcare]{.role}
 
-::: {.qr .placeholder}
-LinkedIn QR
-:::
+![](images/qrcode_keaton.png){.qr}
 ::::
 :::: person
 ![](images/michael-headshot.png){.headshot-lg}
@@ -832,9 +790,7 @@ LinkedIn QR
 [Ketchbrook Analytics — Chief Data Scientist]{.role}
 [On ORCA: the interface]{.hat}
 
-::: {.qr .placeholder}
-LinkedIn QR
-:::
+![](images/qrcode_michael.png){.qr}
 ::::
 :::::
 
