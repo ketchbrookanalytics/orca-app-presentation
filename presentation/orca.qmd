@@ -45,19 +45,7 @@ POSIT::CONF(2026)
 :::
 
 ::: notes
-**Keaton**:
-
-[welcome, introduce the talk and both presenters].
-
-**Both**:
-
-- [Share the function of what we do]
-- [Share the people that we help]
-- [Share the impact of that work]
-
-**Michael**:
-
-While we're going to showcase a particular Shiny app in this presentation, this talk is really about *collaboration*.
+Keaton first, intro, then Michael, then back to Keaton. 
 :::
 
 ## {.cream}
@@ -170,7 +158,6 @@ And from our perspective, we *prefer* to not have to hold on to our clients' API
 *Keaton*
 - One developer call out. We weren't missing skills in-house, but we were missing bandwidth. The team at KS&R was already stretched across several competing priorities, and this lift needed to happen *now*.
 
-~~Feedback: Have Keaton talk about *why* KS&R sought out an external collaborator as opposed to just doing it themselves in-house.~~ (addressed)
 :::
 
 ## Categorizing open-end survey responses is slow, manual, and inconsistent at scale {.paper}
@@ -434,12 +421,6 @@ CHAPTER 1
 ::: hrule
 :::
 
-::: chips
-[Mural]{.chip}
-[KS&R brand book]{.chip}
-[Design system & font files]{.chip}
-:::
-
 ::: notes
 Michael takes over.
 :::
@@ -520,7 +501,7 @@ Also having well-defined contracts of what the *outgoing* data should look like 
 
 These contracts also helped us "defensively program" against anything that would *break* that contract, and allow us to point users back in the right direction as opposed to giving them a "Server disconnected" error message and the app shutting down.
 
-The big picture here -- neither KS&R nor Ketchbrook were every guessing at or assuming the other's needs.
+The big picture here -- neither KS&R nor Ketchbrook were ever guessing at or assuming the other's needs.
 :::
 
 ## Tips for a successful Design phase {.paper}
@@ -547,12 +528,6 @@ CHAPTER 2
 :::
 
 ::: hrule
-:::
-
-::: chips
-[GitHub Issues & PRs]{.chip}
-[[golem]{.pkg}]{.chip}
-[[plumber]{.pkg}]{.chip}
 :::
 
 ::: notes
@@ -641,12 +616,6 @@ CHAPTER 3
 :::
 
 ::: hrule
-:::
-
-::: chips
-[[pins]{.pkg}]{.chip}
-[Posit Connect]{.chip}
-[Scheduled Quarto]{.chip}
 :::
 
 ::: notes
