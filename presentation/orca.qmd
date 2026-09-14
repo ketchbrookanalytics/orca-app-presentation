@@ -595,14 +595,16 @@ WORKING ASYNC, ACROSS COMPANIES
 ## Separation of concerns, in production {.navy .chapter}
 
 ::: {.eyebrow}
-CHAPTER 3
+COLLABORATION SUCCESS TIP #3
 :::
 
 ::: hrule
 :::
 
 ::: notes
-Keaton takes back over for chapter 3.
+**Keaton**
+
+This takes us to our final tip for successful data science collaboration.
 :::
 
 ## A modular backend, decoupled by design {.cream}
@@ -671,20 +673,16 @@ WHAT MADE PARALLEL WORK POSSIBLE
 ::::
 :::::
 
-::: {.kicker}
-Four independently deployable pieces, each with one job — the same separation of concerns that let two companies build without blocking each other.
-:::
-
 ::: notes
-Keaton: modularizing the backend independently from the front end is what made the parallel, non-blocking collaboration possible. Four pieces, each with one job.
+**Keaton**
 
-ORCA — Michael's side. Worth naming brand.yml here: KS&R's brand book went in as a config file, so the app picked up our colours and type without anyone hand-porting them. That's the constraints-as-a-gift slide paying off in practice.
+When we set out on the initial architectural design of the entire solution, we took a *modular* approach to the architecture for a variety of reasons -- it made debugging easier -- if something went wrong it would be more obvious to know where to look than if it was one monolithic codebase (add any other reasons why modularity helps from technical standpoint)...
 
-ORCAstra — the plumber point is the one to land: we built a well-defined surface for each core function and hosted them internally, so the front end could call a stable endpoint while everything behind it kept changing. It leans on ksRAI, an internal R package we wrote to make interfacing with the OpenAI API straightforward — cost estimation, batch submission, response parsing — so that logic lives in one tested place instead of being scattered through the API.
+...but it turns out that this approach (employing modularity throughout the architectural design) is pretty darn useful for collaboration purposes as well. It's hard for multiple people to collaborate together on a single R script without doing something that will impede the other. But when you start to chunk it out into dedicated, separated sections of logic, you can start to work in parallel.
 
-ORCAdb — pins on Connect for versioned metadata and run history.
+Here's what our final modularized architecture ended up looking like
 
-ORCAwatch — a scheduled Quarto document on Connect. purrr is not decoration here: the batch API returns deeply nested lists, and the shape of the coding data is nested too, so the whole wrangling step is map/pluck work.
+< describe the slide >
 :::
 
 ## Build a seam, not a handoff {.paper}
@@ -713,31 +711,9 @@ THE REAL PRODUCT
 ::: notes
 **Michael**:
 
-Through rigorous wireframing, providing style guides up front, and using issues/branches/PRs to strongly document, delegate, and isolate your work, we were able to accomplish something pretty special.
+Through rigorous wireframing, providing style guides up front; using issues/branches/PRs to strongly document, delegate, and isolate your work; and separating out the different components of the solution into their own individual modules, we were able to accomplish something pretty special.
 
-And the real product wasn't just the ORCA app — it was a repeatable model for cross-company, cross-discipline collaboration, deployed to the world via the Posit stack.
-:::
-
-## Bring a design artifact to your next cross-team project — not just code {.paper}
-
-::: {.eyebrow}
-IF YOU'RE BUILDING WITH A PARTNER TEAM
-:::
-
-:::: {.cols-3 .mt-lg}
-::: {.card .cream}
-A shared visual contract — Mural, Excalidraw, or a whiteboard, before anyone opens an editor.
-:::
-::: {.card .cream}
-Issue-driven development — a shared source of truth across company lines. Don't skimp on detail in your Issues & PR bodies.
-:::
-::: {.card .cream}
-An architecture — [golem]{.pkg} + [plumber]{.pkg} + [pins]{.pkg} — that lets both sides move independently.
-:::
-::::
-
-::: notes
-Michael: if you're building Shiny apps with a partner team — agency/client, research/engineering, frontend/backend — invest early in shared visual contracts, issue-driven development, and an architecture that lets both sides move independently against a stable interface.
+And the real product wasn't just the ORCA app — it was a repeatable model for cross-company, cross-discipline collaboration, deployed to real end users via the Posit stack.
 :::
 
 ## {.cream}
@@ -754,6 +730,12 @@ DATA SCIENCE COLLABORATION CAN BE HARD
 [But when you get it right, it feels like this.]{.headline}
 :::
 ::::
+
+::: notes
+**Michael**
+
+< read the slide >
+:::
 
 ## Thank you {.navy .closing}
 
@@ -785,40 +767,7 @@ DATA SCIENCE COLLABORATION CAN BE HARD
 :::
 
 ::: notes
-Both: thank the audience, invite questions. Point at the QR codes — connect with us on LinkedIn. Note that the QR codes / links on the last slide have additional resources the audience might find helpful on these topics.
+**Both**
+
+< thank the audience, invite questions. Point at the QR codes — connect with us on LinkedIn. Note that the QR codes / links on the last slide have additional resources the audience might find helpful on these topics. >
 :::
-
-<!--
-## Three ways cross-team builds fall apart {.cream}
-
-::: {.eyebrow}
-A FAMILIAR FAILURE MODE
-:::
-
-:::: {.cols-3 .mt-lg}
-::: col
-[01]{.num}
-[No clear division of labor]{.sub}
-
-One person quietly ends up carrying the whole project.
-:::
-::: col
-[02]{.num}
-[No shared tooling]{.sub}
-
-Work happens in silos, stitched together at the last minute.
-:::
-::: col
-[03]{.num}
-[No shared goals or guardrails]{.sub}
-
-Different vision, even if division of labor is clear, serving the part and not the whole.
-:::
-::::
-
-::: notes
-You might have good reason to avoid working on a team; maybe you've been burned by one of the three ways that team data science falls apart.
-
-Yes, today's talk involves a Shiny app, but it's really a story about an effective collaboration model between a small team working in Market Research and a data and software development consultants. A model that leveraged UI/UX best practices, a careful and conscious division of labor and a Posit-enriched tech stack to facilitate.
-:::
--->
