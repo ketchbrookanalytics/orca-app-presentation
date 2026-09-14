@@ -579,52 +579,17 @@ WORKING ASYNC, ACROSS COMPANIES
 - PRs allowed us to get our proposed enhancements, updates, fixes, and revisions in front of each other -- and allowing for back-and-forth discussion -- before committing to them hitting the final deliverable  
 :::
 
-## Make the issue the interface {.paper}
-
-::: {.eyebrow}
-TAKEAWAY — WHILE YOU BUILD
-:::
+## Documentation == Communication {.paper}
 
 ::: {.bullets .lg .mt-lg}
-- Write Issues and PR bodies for **someone who doesn't share your codebase, your standup, or your employer**. Detail that feels excessive inside one team is the bare minimum across two.
-- If a decision only exists in a call or a DM, it doesn't exist. Put it where the other company can find it without asking you.
+- Write Issues and PR bodies for **someone who doesn't share your codebase, your standup, or your employer**. Detail that feels excessive inside one team might feel like the bare minimum across two.
+- If a decision only exists in a call or an internal Slack/Teams message, it doesn't exist. Put it where the other company can find it without asking you.
 :::
 
 ::: notes
+**Michael**
 
-:::
-
-## UX needs and backend constraints, both ways {.paper}
-
-::: {.eyebrow}
-IT WENT BOTH DIRECTIONS
-:::
-
-:::: {.split .split-even .fill .mt-md}
-::: {.col .middle-stack}
-::: {.row .exchange}
-[Live job status & inline editing of AI output]{.bar .cream}
-[→]{.glyph}
-[Async job handling, structured logging]{.bar .solid}
-:::
-
-::: {.row .exchange .mt-sm}
-[Batch cost & timing]{.bar .solid}
-[→]{.glyph}
-[Progress states, review queues]{.bar .cream}
-:::
-:::
-::: col
-[![](images/orca-04-job-status.png)]{.frame .crop style="height:639px;"}
-
-[The status table users asked for — and the structured logging behind it.]{.cap .mt-sm}
-:::
-::::
-
-::: notes
-We even ran into situations where things that were outside of the scope of our initial design popped up that we needed to accomplish. [Provide the example on this screen, and discuss how it went both ways]. GitHub Issues/PRs made this "on-the-fly" bi-directional collaboration *efficient*.
-
-Michael: a UX need — live job status, inline editing of AI output — drove a backend design decision (async job handling, structured logging). A backend constraint — batch cost and timing — shaped a front-end pattern (progress states, review queues).
+< Recap the slide bullet points >
 :::
 
 ## Separation of concerns, in production {.navy .chapter}
@@ -734,7 +699,9 @@ TAKEAWAY — AFTER YOU SHIP
 :::
 
 ::: notes
-Keaton, active takeaway for chapter 3: the architecture is what lets the collaboration survive. Choose the seam on purpose, make it stable, and both sides stay unblocked long after the initial build.
+**Keaton**
+
+We even ran into situations where things that were outside of the scope of our initial design popped up that we needed to accomplish. Having this strong "seam" in place between the two parties made us nimble and able to quickly and effectively meet those ad-hoc needs.  
 :::
 
 ## Not just ORCA — a repeatable model for cross-company collaboration on the Posit stack. {.cream .statement}
