@@ -157,7 +157,7 @@ Maybe this sounds scary to some of you out there, but there are some obvious ben
 
 **Michael**
 
-That's how we rationalized dividing up the work in this particular case. We're not necessarily advocating for this exact delegation strategy -- you may find in your own projects that separating the work between multiple parties works better by delegating different pages of an app to different developers, adopting our front end vs. back end strategy, or something totally different. Just make sure the split it is *well-defined*.
+That front-end vs. back-end split is how we rationalized dividing up the work in this particular case. We're not necessarily advocating for this exact delegation strategy -- you may find in your own projects that separating the work between multiple parties works better by delegating different pages of an app to different developers, adopting our front end vs. back end strategy, or something totally different. Just make sure the split it is *well-defined*.
 
 **Keaton**
 
@@ -166,9 +166,6 @@ KS&R found that the front-end/back-end delegation led to lower institutional and
 **Michael**
 
 And from our perspective, we *prefer* to not have to hold onto our clients' API keys or sensitive data, so that we don't have to deal with the responsibility of securing those things -- the best security posture is having nothing sensitive to secure in the first place.
-
-*Keaton*
-
 :::
 
 ## Categorizing open-end survey responses is slow, manual, and inconsistent at scale {.paper}
@@ -188,7 +185,7 @@ In just a moment, Keaton is going to talk about "open-end survey coding". But wh
 
 - slow and manual process, lots of human time.
 - also be *inconsistent* at scale.
-- The team at KS&R had a hypothesis that AI could accelerate this task — but we knew that internal stakeholders and clients would not accept a "black box" doing this work.
+- The team at KS&R had a hypothesis that AI could accelerate this task
 :::
 
 
@@ -356,76 +353,7 @@ TWO LENSES ON ONE BUILD
 ::: notes
 **Keaton**
 
-two lenses on what follows — Michael on the Shiny front end (job submission, response review, interactive code editing), me on the Posit-based back end (plumber, pins, scheduled Quarto workflows) — all of it deployed on Posit Connect.
-:::
-
-## A stable seam between two codebases {.cream}
-
-::: {.eyebrow}
-THE ARCHITECTURE THAT MADE IT POSSIBLE
-:::
-
-::::: {.arch .fill .mt-md}
-:::: {.card .centered style="grid-area:1/1/2/4;"}
-[ORCA]{.sub}
-[[golem]{.pkg} Shiny app]{.cap}
-[Ketchbrook]{.tenant}
-::::
-
-::: {.glyph style="grid-area:1/4/2/5;"}
-↔
-:::
-
-:::: {.card .navy .centered style="grid-area:1/5/2/8;"}
-[ORCAstra]{.sub}
-[[plumber]{.pkg} API]{.cap}
-[KS&R]{.tenant}
-::::
-
-::: {.glyph style="grid-area:1/8/2/9;"}
-→
-:::
-
-:::: {.card .centered .muted style="grid-area:1/9/2/12;"}
-[OpenAI]{.sub}
-[batch classification]{.cap}
-::::
-
-::: {.wire .up-right .muted style="grid-area:2/4/3/6;"}
-:::
-
-::: {.wire .up-left .muted style="grid-area:2/7/3/9;"}
-:::
-
-:::: {.card .centered .muted style="grid-area:3/3/4/6;"}
-[ORCAdb]{.sub}
-[[pins]{.pkg} metadata & run history]{.cap}
-[KS&R]{.tenant}
-::::
-
-::: {.glyph .muted style="grid-area:3/6/4/7;"}
-↔
-:::
-
-:::: {.card .centered .muted style="grid-area:3/7/4/10;"}
-[ORCAwatch]{.sub}
-[scheduled Quarto job — writes .sav / .csv / .rds to the network share, then emails the submitter]{.cap}
-[KS&R]{.tenant}
-::::
-:::::
-
-::: {.kicker}
-The UI iterated against a stable API surface while the heavier logic behind it kept changing. **Everything greyed out here we'll come back to.**
-:::
-
-::: notes
-**Keaton**
-
-TODO -- I think this slide really impedes for a natural transition into the next slide.  Can we put it someplace else, or remove it all together?
-
-This is the architecture that made this possible. And focusing just on the top row: we have a golem-based Shiny app decoupled from a plumber API for async job processing, so the UI could be built and iterated against a stable API surface while the heavier AI/coding logic evolved behind it. ORCAstra is what actually talks to the OpenAI batch API — the front end never holds a key.
-
-The other greyed out pieces of the solution include ORCAdb, a pins board on Connect holding batch metadata and run history; and ORCAwatch, a scheduled Quarto document that polls ORCAstra for finished jobs, reads and updates that pin, and writes the cleaned files out to the network share, then emails the submitter once delivery is complete.
+two lenses on what follows — Michael on the Shiny front end, me on the Posit-based back end — all of it deployed on Posit Connect.
 :::
 
 ## Designing together, before writing a line of code {.navy .chapter}
